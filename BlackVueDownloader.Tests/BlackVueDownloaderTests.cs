@@ -57,7 +57,7 @@ namespace BlackVueDownloader.Tests
             "20160404_12345_NR.mp4", 4)]
         public void GetListOfFilesFromResponseTest(string body, string firstval, int numelements)
         {
-            var blackVueDownloader = new PCL.BlackVueDownloader(new FileSystemHelper());
+            var blackVueDownloader = new PCL.BlackVueDownloader();
 
             var list = blackVueDownloader.GetListOfFilesFromResponse(body);
             Assert.Equal(numelements, list.Count);
@@ -68,7 +68,7 @@ namespace BlackVueDownloader.Tests
         [InlineData("192.168.1.1")]
         public void QueryCameraForFileListTest(string ip)
         {
-            var blackVueDownloader = new PCL.BlackVueDownloader(new FileSystemHelper());
+            var blackVueDownloader = new PCL.BlackVueDownloader();
 
             using (var httpTest = new HttpTest())
             {
@@ -86,7 +86,7 @@ namespace BlackVueDownloader.Tests
         [InlineData("192.168.1.1")]
         public void EmptyResponseTest(string ip)
         {
-            var blackVueDownloader = new PCL.BlackVueDownloader(new FileSystemHelper());
+            var blackVueDownloader = new PCL.BlackVueDownloader();
 
             using (var httpTest = new HttpTest())
             {
@@ -104,7 +104,7 @@ namespace BlackVueDownloader.Tests
         [InlineData("192.168.1.1")]
         public void InvalidResponseTest(string ip)
         {
-            var blackVueDownloader = new PCL.BlackVueDownloader(new FileSystemHelper());
+            var blackVueDownloader = new PCL.BlackVueDownloader();
 
             using (var httpTest = new HttpTest())
             {
@@ -127,7 +127,7 @@ namespace BlackVueDownloader.Tests
         [InlineData("192.168.1.99")]
         public void CantFindCameraTest(string ip)
         {
-            var blackVueDownloader = new PCL.BlackVueDownloader(new FileSystemHelper());
+            var blackVueDownloader = new PCL.BlackVueDownloader();
 
             using (var httpTest = new HttpTest())
             {
@@ -150,7 +150,7 @@ namespace BlackVueDownloader.Tests
         [InlineData("192.168.1.99", 10)]
         public void CameraRespondValidTest(string ip, int numRecords)
         {
-            var blackVueDownloader = new PCL.BlackVueDownloader(new FileSystemHelper());
+            var blackVueDownloader = new PCL.BlackVueDownloader();
 
             using (var httpTest = new HttpTest())
             {
@@ -174,7 +174,7 @@ namespace BlackVueDownloader.Tests
             var filesystem = new Mock<IFileSystemHelper>();
 
             var blackVueDownloader = new PCL.BlackVueDownloader(filesystem.Object);
-            var blackVueDownloaderNoMock = new PCL.BlackVueDownloader(new FileSystemHelper());
+            var blackVueDownloaderNoMock = new PCL.BlackVueDownloader();
 
             var httpTest = new HttpTest();
 

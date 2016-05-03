@@ -15,6 +15,19 @@ namespace BlackVueDownloader.PCL
             _fileSystemHelper = fileSystemHelper;
         }
 
+        public BlackVueDownloader()
+        {
+            _fileSystemHelper = new FileSystemHelper();
+        }
+
+        public void Run(string ip)
+        {
+            var body = QueryCameraForFileList(ip);
+            var list = GetListOfFilesFromResponse(body);
+
+            ProcessList(ip, list);
+        }
+
         public static bool IsValidIp(string ip)
         {
             IPAddress address;

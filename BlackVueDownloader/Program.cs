@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using BlackVueDownloader.PCL;
 
 namespace BlackVueDownloader
 {
@@ -18,23 +17,9 @@ namespace BlackVueDownloader
                 return;
             }
 
-            var blackVueDownloader = new PCL.BlackVueDownloader(new FileSystemHelper());
+            var blackVueDownloader = new PCL.BlackVueDownloader();
 
-            var ip = args[0];
-            string body;
-            try
-            {
-                body = blackVueDownloader.QueryCameraForFileList(ip);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Error: {e.Message}");
-                return;
-            }
-
-            var list = blackVueDownloader.GetListOfFilesFromResponse(body);
-
-            blackVueDownloader.ProcessList(ip, list);
+            blackVueDownloader.Run(args[0]);
         }
     }
 }
