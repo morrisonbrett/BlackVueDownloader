@@ -147,7 +147,7 @@ namespace BlackVueDownloader.PCL
         {
             try
             {
-                string url = $"http://{ip}/blackvue_vod";
+                var url = $"http://{ip}/blackvue_vod";
 
                 var fileListBody = url.GetStringAsync();
                 fileListBody.Wait();
