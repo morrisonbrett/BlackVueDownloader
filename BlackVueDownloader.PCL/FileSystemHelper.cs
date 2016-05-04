@@ -4,19 +4,19 @@ namespace BlackVueDownloader.PCL
 {
     public class FileSystemHelper : IFileSystemHelper
     {
-        public virtual void Copy(string source, string dest)
+        public virtual void Copy(string sourceFilename, string destFilename)
         {
-            File.Copy(source, dest);
+            File.Copy(sourceFilename, destFilename);
         }
 
-        public virtual void Delete(string fn)
+        public virtual void Delete(string filename)
         {
-            File.Delete(fn);
+            File.Delete(filename);
         }
 
-        public virtual bool Exists(string fn)
+        public virtual bool Exists(string filename)
         {
-            return File.Exists(fn);
+            return File.Exists(filename);
         }
     }
 }

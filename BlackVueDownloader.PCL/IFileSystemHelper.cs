@@ -2,10 +2,10 @@ namespace BlackVueDownloader.PCL
 {
     public interface IFileSystemHelper
     {
-        void Copy(string source, string dest);
+        void Copy(string sourceFilename, string destFilename);
 
-        void Delete(string fn);
+        void Delete(string filename);
 
-        bool Exists(string fn);
+        bool Exists(string filename);
     }
 }
