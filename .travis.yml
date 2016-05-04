@@ -1,0 +1,7 @@
+language: csharp
+solution: ./BlackVueDownloader.sln
+install:
+  - nuget restore ./BlackVueDownloader.sln
+script:
+  - xbuild /p:Configuration=Release ./BlackVueDownloader.sln
+  - mono ./packages/xunit.runner.*/tools/xunit.console.exe ./BlackVueDownloader.Tests/bin/Release/BlackVueDownloader.Tests.dll
