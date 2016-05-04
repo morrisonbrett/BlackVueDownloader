@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using BlackVueDownloader.PCL;
 using Flurl.Http.Testing;
 using Moq;
@@ -222,14 +223,13 @@ namespace BlackVueDownloader.Tests
 
         [Theory]
         [InlineData("192.168.1.99")]
-        [InlineData("192.168.1.99")]
         public void DownloadFileIgnoreTest(string ip)
         {
             var filesystem = new Mock<IFileSystemHelper>();
 
             var blackVueDownloader = new PCL.BlackVueDownloader(filesystem.Object);
 
-            filesystem.Setup(x => x.Exists("Record/ignorefile.mp4")).Returns(true);
+            filesystem.Setup(x => x.Exists(Path.Combine("Record", "ignorefile.mp4"))).Returns(true);
             blackVueDownloader.DownloadFile(ip, "ignorefile.mp4", "video");
 
             Assert.Equal(1, blackVueDownloader.BlackVueDownloaderCopyStats.Ignored);

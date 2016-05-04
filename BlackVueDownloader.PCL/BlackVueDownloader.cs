@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using Flurl.Http;
@@ -64,7 +65,8 @@ namespace BlackVueDownloader.PCL
         /// <param name="filetype"></param>
         public void DownloadFile(string ip, string filename, string filetype)
         {
-            if (_fileSystemHelper.Exists($"Record/{filename}"))
+            var filepath = Path.Combine("Record", filename);
+            if (_fileSystemHelper.Exists(filepath))
             {
                 BlackVueDownloaderCopyStats.Ignored++;
             }
