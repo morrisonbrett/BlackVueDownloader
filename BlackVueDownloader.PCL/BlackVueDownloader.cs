@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using Flurl.Http;
 
@@ -51,17 +52,8 @@ namespace BlackVueDownloader.PCL
         /// <returns>Normalized list of files</returns>
         public IList<string> GetListOfFilesFromResponse(string body)
         {
-            var fileList = new List<string>();
-
             // Parse each element of the body by the separator, which fortunately is a 'space'
-            var element = body.Split(' ');
-            foreach (var e in element)
-            {
-                // Parse only what we need off of it by replacing what we don't with nothing.
-                fileList.Add(e.Replace("n:/Record/", "").Replace(",s:1000000", ""));
-            }
-
-            return fileList;
+            return body.Split(' ').Select(e => e.Replace("n:/Record/", "").Replace(",s:1000000", "")).ToList();
         }
 
         /// <summary>
