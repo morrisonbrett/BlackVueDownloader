@@ -9,6 +9,7 @@ namespace BlackVueDownloader.PCL
     public class BlackVueDownloader
     {
         private readonly IFileSystemHelper _fileSystemHelper;
+        public BlackVueDownloaderCopyStats BlackVueDownloaderCopyStats;
 
         /// <summary>
         /// Instance Downloader with Moq friendly constructor
@@ -17,15 +18,13 @@ namespace BlackVueDownloader.PCL
         public BlackVueDownloader(IFileSystemHelper fileSystemHelper)
         {
             _fileSystemHelper = fileSystemHelper;
+            BlackVueDownloaderCopyStats = new BlackVueDownloaderCopyStats();
         }
 
         /// <summary>
         /// Instance Downloader with base constructor
         /// </summary>
-        public BlackVueDownloader()
-        {
-            _fileSystemHelper = new FileSystemHelper();
-        }
+        public BlackVueDownloader() : this (new FileSystemHelper()) {}
 
         /// <summary>
         /// Main control flow
@@ -71,13 +70,11 @@ namespace BlackVueDownloader.PCL
         /// <param name="ip"></param>
         /// <param name="filename"></param>
         /// <param name="filetype"></param>
-        /// <param name="blackVueDownloaderCopyStats"></param>
-        public void DownloadFile(string ip, string filename, string filetype,
-            ref BlackVueDownloaderCopyStats blackVueDownloaderCopyStats)
+        public void DownloadFile(string ip, string filename, string filetype)
         {
             if (_fileSystemHelper.Exists($"Record/{filename}"))
             {
-                blackVueDownloaderCopyStats.Ignored++;
+                BlackVueDownloaderCopyStats.Ignored++;
             }
             else
             {
@@ -87,12 +84,12 @@ namespace BlackVueDownloader.PCL
                     var path = url.DownloadFileAsync("Record");
                     Console.WriteLine($"Downloading {filetype} file: {url}");
                     path.Wait();
-                    blackVueDownloaderCopyStats.Copied++;
+                    BlackVueDownloaderCopyStats.Copied++;
                 }
                 catch (FlurlHttpTimeoutException e)
                 {
                     Console.WriteLine($"FlurlHttpTimeoutException: {e.Message}");
-                    blackVueDownloaderCopyStats.Errored++;
+                    BlackVueDownloaderCopyStats.Errored++;
                 }
                 catch (FlurlHttpException e)
                 {
@@ -101,20 +98,14 @@ namespace BlackVueDownloader.PCL
                         Console.WriteLine($"Failed with response code: {e.Call.Response.StatusCode}");
                     }
                     Console.Write($"Failed before getting a response: {e.Message}");
-                    blackVueDownloaderCopyStats.Errored++;
+                    BlackVueDownloaderCopyStats.Errored++;
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine($"Exception: {e.Message}");
-                    blackVueDownloaderCopyStats.Errored++;
+                    BlackVueDownloaderCopyStats.Errored++;
                 }
             }
-        }
-
-        public void ProcessList(string ip, IList<string> list)
-        {
-            var blackVueDownloaderCopyStats = new BlackVueDownloaderCopyStats();
-            ProcessList(ip, list, ref blackVueDownloaderCopyStats);
         }
 
         /// <summary>
@@ -122,9 +113,7 @@ namespace BlackVueDownloader.PCL
         /// </summary>
         /// <param name="ip"></param>
         /// <param name="list"></param>
-        /// <param name="blackVueDownloaderCopyStats"></param>
-        public void ProcessList(string ip, IList<string> list,
-            ref BlackVueDownloaderCopyStats blackVueDownloaderCopyStats)
+        public void ProcessList(string ip, IList<string> list)
         {
             var sw = new Stopwatch();
             sw.Start();
@@ -135,24 +124,24 @@ namespace BlackVueDownloader.PCL
             {
                 Console.WriteLine($"Processing File: {s}");
 
-                DownloadFile(ip, s, "video", ref blackVueDownloaderCopyStats);
+                DownloadFile(ip, s, "video");
 
                 // Line below because the list may includes _NF and _NR.  Only continue if it's an NF.
                 // Otherwise it's trying to download files that are probably already downloaded
                 if (!s.Contains("_NF.mp4")) continue;
 
                 var gpsfile = s.Replace("_NF.mp4", "_N.gps");
-                DownloadFile(ip, gpsfile, "gps", ref blackVueDownloaderCopyStats);
+                DownloadFile(ip, gpsfile, "gps");
 
                 var gffile = s.Replace("_NF.mp4", "_N.3gf");
-                DownloadFile(ip, gffile, "3gf", ref blackVueDownloaderCopyStats);
+                DownloadFile(ip, gffile, "3gf");
             }
 
             sw.Stop();
-            blackVueDownloaderCopyStats.TotalTime = sw.Elapsed;
+            BlackVueDownloaderCopyStats.TotalTime = sw.Elapsed;
 
             Console.WriteLine(
-                $"Copied {blackVueDownloaderCopyStats.Copied}, Ignored {blackVueDownloaderCopyStats.Ignored}, Errored {blackVueDownloaderCopyStats.Errored} TotalTime {blackVueDownloaderCopyStats.TotalTime}");
+                $"Copied {BlackVueDownloaderCopyStats.Copied}, Ignored {BlackVueDownloaderCopyStats.Ignored}, Errored {BlackVueDownloaderCopyStats.Errored} TotalTime {BlackVueDownloaderCopyStats.TotalTime}");
         }
 
         /// <summary>

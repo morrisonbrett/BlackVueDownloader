@@ -182,16 +182,14 @@ namespace BlackVueDownloader.Tests
 
             Assert.Equal(numRecords*2, list.Count);
 
-            var copyStats = new BlackVueDownloaderCopyStats();
-
             // Success test
             for (var i = 0; i < numRecords*4; i++)
             {
                 httpTest.RespondWith(200, "OK");
             }
-            copyStats.Clear();
-            blackVueDownloader.ProcessList(ip, list, ref copyStats);
-            Assert.Equal(numRecords*4, copyStats.Copied);
+            blackVueDownloader.BlackVueDownloaderCopyStats.Clear();
+            blackVueDownloader.ProcessList(ip, list);
+            Assert.Equal(numRecords*4, blackVueDownloader.BlackVueDownloaderCopyStats.Copied);
 
             // Ignored from above test
             // What happens with the above tests, is that it writes actual files to
@@ -199,27 +197,27 @@ namespace BlackVueDownloader.Tests
             // so there should be numrecords * 4 files there
             // And if we loop through again, they should all exist, and therefore be "ignored"
             // We need to do this with an unmocked version of the file system helper
-            copyStats.Clear();
-            blackVueDownloaderNoMock.ProcessList(ip, list, ref copyStats);
-            Assert.Equal(numRecords*4, copyStats.Ignored);
+            blackVueDownloaderNoMock.BlackVueDownloaderCopyStats.Clear();
+            blackVueDownloaderNoMock.ProcessList(ip, list);
+            Assert.Equal(numRecords*4, blackVueDownloaderNoMock.BlackVueDownloaderCopyStats.Ignored);
 
             // Fail test
             for (var i = 0; i < numRecords*4; i++)
             {
                 httpTest.RespondWith(500, "FAILURE");
             }
-            copyStats.Clear();
-            blackVueDownloader.ProcessList(ip, list, ref copyStats);
-            Assert.Equal(numRecords*4, copyStats.Errored);
+            blackVueDownloader.BlackVueDownloaderCopyStats.Clear();
+            blackVueDownloader.ProcessList(ip, list);
+            Assert.Equal(numRecords*4, blackVueDownloader.BlackVueDownloaderCopyStats.Errored);
 
             // Timeout Fail test
             for (var i = 0; i < numRecords*4; i++)
             {
                 httpTest.SimulateTimeout();
             }
-            copyStats.Clear();
-            blackVueDownloader.ProcessList(ip, list, ref copyStats);
-            Assert.Equal(numRecords*4, copyStats.Errored);
+            blackVueDownloader.BlackVueDownloaderCopyStats.Clear();
+            blackVueDownloader.ProcessList(ip, list);
+            Assert.Equal(numRecords*4, blackVueDownloader.BlackVueDownloaderCopyStats.Errored);
         }
 
         [Theory]
@@ -231,12 +229,10 @@ namespace BlackVueDownloader.Tests
 
             var blackVueDownloader = new PCL.BlackVueDownloader(filesystem.Object);
 
-            var copyStats = new BlackVueDownloaderCopyStats();
-
             filesystem.Setup(x => x.Exists("Record/ignorefile.mp4")).Returns(true);
-            blackVueDownloader.DownloadFile(ip, "ignorefile.mp4", "video", ref copyStats);
+            blackVueDownloader.DownloadFile(ip, "ignorefile.mp4", "video");
 
-            Assert.Equal(1, copyStats.Ignored);
+            Assert.Equal(1, blackVueDownloader.BlackVueDownloaderCopyStats.Ignored);
         }
     }
 }
