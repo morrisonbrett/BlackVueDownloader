@@ -10,16 +10,27 @@ namespace BlackVueDownloader.PCL
     {
         private readonly IFileSystemHelper _fileSystemHelper;
 
+        /// <summary>
+        /// Instance Downloader with Moq friendly constructor
+        /// </summary>
+        /// <param name="fileSystemHelper"></param>
         public BlackVueDownloader(IFileSystemHelper fileSystemHelper)
         {
             _fileSystemHelper = fileSystemHelper;
         }
 
+        /// <summary>
+        /// Instance Downloader with base constructor
+        /// </summary>
         public BlackVueDownloader()
         {
             _fileSystemHelper = new FileSystemHelper();
         }
 
+        /// <summary>
+        /// Main control flow
+        /// </summary>
+        /// <param name="ip"></param>
         public void Run(string ip)
         {
             var body = QueryCameraForFileList(ip);
@@ -34,7 +45,12 @@ namespace BlackVueDownloader.PCL
             return IPAddress.TryParse(ip, out address);
         }
 
-        public List<string> GetListOfFilesFromResponse(string body)
+        /// <summary>
+        /// Connect to the camera and get a list of files
+        /// </summary>
+        /// <param name="body"></param>
+        /// <returns>Normalized list of files</returns>
+        public IList<string> GetListOfFilesFromResponse(string body)
         {
             var fileList = new List<string>();
 
@@ -49,6 +65,13 @@ namespace BlackVueDownloader.PCL
             return fileList;
         }
 
+        /// <summary>
+        /// For given camera ip, filename, and filetype, download the file and return a status
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <param name="filename"></param>
+        /// <param name="filetype"></param>
+        /// <param name="blackVueDownloaderCopyStats"></param>
         public void DownloadFile(string ip, string filename, string filetype,
             ref BlackVueDownloaderCopyStats blackVueDownloaderCopyStats)
         {
@@ -88,13 +111,19 @@ namespace BlackVueDownloader.PCL
             }
         }
 
-        public void ProcessList(string ip, List<string> list)
+        public void ProcessList(string ip, IList<string> list)
         {
             var blackVueDownloaderCopyStats = new BlackVueDownloaderCopyStats();
             ProcessList(ip, list, ref blackVueDownloaderCopyStats);
         }
 
-        public void ProcessList(string ip, List<string> list,
+        /// <summary>
+        /// For the list, loop through and process it
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <param name="list"></param>
+        /// <param name="blackVueDownloaderCopyStats"></param>
+        public void ProcessList(string ip, IList<string> list,
             ref BlackVueDownloaderCopyStats blackVueDownloaderCopyStats)
         {
             var sw = new Stopwatch();
@@ -126,6 +155,11 @@ namespace BlackVueDownloader.PCL
                 $"Copied {blackVueDownloaderCopyStats.Copied}, Ignored {blackVueDownloaderCopyStats.Ignored}, Errored {blackVueDownloaderCopyStats.Errored} TotalTime {blackVueDownloaderCopyStats.TotalTime}");
         }
 
+        /// <summary>
+        /// Get a raw string response from the camera
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <returns>Raw string list of files</returns>
         public string QueryCameraForFileList(string ip)
         {
             try
