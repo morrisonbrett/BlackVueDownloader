@@ -80,7 +80,7 @@ namespace BlackVueDownloader.PCL
             {
                 try
                 {
-                    string url = $"http://{ip}/Record/{filename}";
+                    var url = $"http://{ip}/Record/{filename}";
                     var path = url.DownloadFileAsync("Record");
                     Console.WriteLine($"Downloading {filetype} file: {url}");
                     path.Wait();
