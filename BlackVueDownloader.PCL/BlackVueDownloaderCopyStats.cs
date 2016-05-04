@@ -4,10 +4,10 @@ namespace BlackVueDownloader.PCL
 {
     public struct BlackVueDownloaderCopyStats
     {
-        public int Copied { get; internal set; }
-        public int Ignored { get; internal set; }
-        public TimeSpan TotalTime { get; internal set; }
-        public int Errored { get; internal set; }
+        public int Copied { get; set; }
+        public int Ignored { get; set; }
+        public TimeSpan TotalTime { get; set; }
+        public int Errored { get; set; }
 
         public void Clear()
         {
