@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 
 namespace BlackVueDownloader
@@ -13,13 +14,26 @@ namespace BlackVueDownloader
 
             if (args.Length < 1)
             {
-                Console.WriteLine("Usage: BlackVueDownloader.exe ipaddress");
+                Console.WriteLine("Usage: BlackVueDownloader.exe ipaddress [destinationdirectory]");
                 return;
+            }
+
+            var ip = args[0];
+            if (!PCL.BlackVueDownloader.IsValidIp(ip)) 
+            {
+                Console.WriteLine($"Invalid IP Address: {ip}");
+                return;
+            }
+
+            var directory = Directory.GetCurrentDirectory();
+            if (args.Length == 2)
+            {
+                directory = args[1];
             }
 
             var blackVueDownloader = new PCL.BlackVueDownloader();
 
-            blackVueDownloader.Run(args[0]);
+            blackVueDownloader.Run(ip, directory);
         }
     }
 }

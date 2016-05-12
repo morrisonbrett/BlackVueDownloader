@@ -32,12 +32,13 @@ namespace BlackVueDownloader.PCL
         /// Main control flow
         /// </summary>
         /// <param name="ip"></param>
-        public void Run(string ip)
+        /// <param name="directory"></param>
+        public void Run(string ip, string directory)
         {
             var body = QueryCameraForFileList(ip);
             var list = GetListOfFilesFromResponse(body);
 
-            ProcessList(ip, list);
+            ProcessList(ip, directory, list);
         }
 
         public static bool IsValidIp(string ip)
@@ -61,9 +62,10 @@ namespace BlackVueDownloader.PCL
         /// For given camera ip, filename, and filetype, download the file and return a status
         /// </summary>
         /// <param name="ip"></param>
+        /// <param name="directory"></param>
         /// <param name="filename"></param>
         /// <param name="filetype"></param>
-        public void DownloadFile(string ip, string filename, string filetype)
+        public void DownloadFile(string ip, string directory, string filename, string filetype)
         {
             var filepath = Path.Combine("Record", filename);
             if (_fileSystemHelper.Exists(filepath))
@@ -75,7 +77,7 @@ namespace BlackVueDownloader.PCL
                 try
                 {
                     var url = $"http://{ip}/Record/{filename}";
-                    var path = url.DownloadFileAsync("Record");
+                    var path = url.DownloadFileAsync(Path.Combine(directory, "Record"));
                     Console.WriteLine($"Downloading {filetype} file: {url}");
                     path.Wait();
                     BlackVueDownloaderCopyStats.Copied++;
@@ -106,8 +108,9 @@ namespace BlackVueDownloader.PCL
         /// For the list, loop through and process it
         /// </summary>
         /// <param name="ip"></param>
+        /// <param name="directory"></param>
         /// <param name="list"></param>
-        public void ProcessList(string ip, IList<string> list)
+        public void ProcessList(string ip, string directory, IList<string> list)
         {
             var sw = new Stopwatch();
             sw.Start();
@@ -118,17 +121,17 @@ namespace BlackVueDownloader.PCL
             {
                 Console.WriteLine($"Processing File: {s}");
 
-                DownloadFile(ip, s, "video");
+                DownloadFile(ip, directory, s, "video");
 
                 // Line below because the list may includes _NF and _NR.  Only continue if it's an NF.
                 // Otherwise it's trying to download files that are probably already downloaded
                 if (!s.Contains("_NF.mp4")) continue;
 
                 var gpsfile = s.Replace("_NF.mp4", "_N.gps");
-                DownloadFile(ip, gpsfile, "gps");
+                DownloadFile(ip, directory, gpsfile, "gps");
 
                 var gffile = s.Replace("_NF.mp4", "_N.3gf");
-                DownloadFile(ip, gffile, "3gf");
+                DownloadFile(ip, directory, gffile, "3gf");
             }
 
             sw.Stop();
