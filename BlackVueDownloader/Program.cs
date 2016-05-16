@@ -8,7 +8,7 @@ namespace BlackVueDownloader
     {
         private static void Main(string[] args)
         {
-            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            var version = Assembly.GetEntryAssembly().GetName().Version.ToString();
 
             Console.WriteLine($"BlackVue Downloader Version {version}");
 
