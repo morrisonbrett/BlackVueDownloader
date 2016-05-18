@@ -3,19 +3,16 @@
   "buildOptions": {
     "emitEntryPoint": true
   },
-
   "dependencies": {
-    "BlackVueDownloader.PCL": "1.0.0-*",
-    "Microsoft.NETCore.App": {
-      "type": "platform",
-      "version": "1.0.0-rc2-*"
-    },
-    "System.Reflection": "4.1.0-rc2-24103"
+    "BlackVueDownloader.PCL": "1.0.0-*"
   },
-
   "frameworks": {
     "netcoreapp1.0": {
       "imports": "dnxcore50"
     }
+  },
+  "runtimes": {
+    "win10-x64": { },
+    "osx.10.11-x64": { }
   }
 }

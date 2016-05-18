@@ -243,4 +243,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
-BlackVueDownloader.Tests/Record/
+
+Record/
