@@ -31,9 +31,16 @@ namespace BlackVueDownloader
                 directory = args[1];
             }
 
-            var blackVueDownloader = new PCL.BlackVueDownloader();
 
-            blackVueDownloader.Run(ip, directory);
+            try
+            {
+                var blackVueDownloader = new PCL.BlackVueDownloader();
+                blackVueDownloader.Run(ip, directory);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"General exception {e.Message}");
+            }
         }
     }
 }
