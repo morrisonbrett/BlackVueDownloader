@@ -8,4 +8,4 @@ Fortunately, there is.  This [blog post](https://gadgetblogist.wordpress.com/201
 
 Simply connect a Windows machine to the Ad-Hoc network, and run this program with the camera's IP address.  Once the files are downloaded, change the 'File path' of the BlackVue HD viewer to point to where the files are stored.
 
-![BlackVue HD](/Media/blackvue_hd.png)
+![BlackVue HD](Media/blackvue_hd.png)
