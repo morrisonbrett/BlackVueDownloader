@@ -13,7 +13,7 @@
     "Flurl.Http": "0.10.0",
     "moq.netcore": "4.4.0-beta8",
     "dotnet-test-xunit": "1.0.0-rc3-000000-00",
-    "System.Diagnostics.TraceSource": "4.0.0-rc2-24027"
+    "System.Diagnostics.TraceSource": "4.0.0-rc3-24117-00"
   },
   "testRunner": "xunit",
   "frameworks": {

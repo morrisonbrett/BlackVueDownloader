@@ -10,7 +10,7 @@
       "type": "platform",
       "version": "1.0.0-rc2-*"
     },
-    "System.Reflection": "4.1.0-rc2-24103"
+    "System.Reflection": "4.1.0-rc3-24117-00"
   },
 
   "frameworks": {
