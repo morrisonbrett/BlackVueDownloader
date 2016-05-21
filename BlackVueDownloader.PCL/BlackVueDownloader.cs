@@ -54,8 +54,8 @@ namespace BlackVueDownloader.PCL
         /// <returns>Normalized list of files</returns>
         public IList<string> GetListOfFilesFromResponse(string body)
         {
-            // Parse each element of the body by the separator, which fortunately is a 'space'
-            return body.Split(' ').Select(e => e.Replace("n:/Record/", "").Replace(",s:1000000", "")).ToList();
+            // Strip the header. Parse each element of the body by the separator, which is '\r\n'.  Replace with space, then split.
+            return body.Replace("v:1.00\r\n", "").Replace("\r\n", " ").Split(' ').Select(e => e.Replace("n:/Record/", "").Replace(",s:1000000", "")).ToList();
         }
 
         /// <summary>
@@ -67,9 +67,22 @@ namespace BlackVueDownloader.PCL
         /// <param name="filetype"></param>
         public void DownloadFile(string ip, string directory, string filename, string filetype)
         {
-            var filepath = Path.Combine("Record", filename);
+            string filepath = "";
+
+            try
+            {
+                filepath = Path.Combine("Record", filename);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Path Combine exception for directory {directory}, filename {filename}, Exception Message: {e.Message}");
+                BlackVueDownloaderCopyStats.Errored++;
+                return;
+            }
+
             if (_fileSystemHelper.Exists(filepath))
             {
+                Console.WriteLine($"File exists {filepath}, ignoring");
                 BlackVueDownloaderCopyStats.Ignored++;
             }
             else
@@ -77,8 +90,8 @@ namespace BlackVueDownloader.PCL
                 try
                 {
                     var url = $"http://{ip}/Record/{filename}";
-                    var path = url.DownloadFileAsync(Path.Combine(directory, "Record"));
                     Console.WriteLine($"Downloading {filetype} file: {url}");
+                    var path = url.DownloadFileAsync(Path.Combine(directory, "Record"));
                     path.Wait();
                     BlackVueDownloaderCopyStats.Copied++;
                 }
@@ -150,7 +163,7 @@ namespace BlackVueDownloader.PCL
         {
             try
             {
-                var url = $"http://{ip}/blackvue_vod";
+                var url = $"http://{ip}/blackvue_vod.cgi";
 
                 var fileListBody = url.GetStringAsync();
                 fileListBody.Wait();

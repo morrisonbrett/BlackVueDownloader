@@ -117,7 +117,7 @@ namespace BlackVueDownloader.Tests
                 }
                 catch (Exception e)
                 {
-                    Assert.Equal("One or more errors occurred.", e.Message);
+                    Assert.StartsWith("One or more errors occurred.", e.Message);
                 }
 
                 httpTest.ShouldHaveCalled($"http://{ip}/blackvue_vod");
@@ -140,7 +140,7 @@ namespace BlackVueDownloader.Tests
                 }
                 catch (Exception e)
                 {
-                    Assert.Equal("One or more errors occurred.", e.Message);
+                    Assert.StartsWith("One or more errors occurred.", e.Message);
                 }
 
                 httpTest.ShouldHaveCalled($"http://{ip}/blackvue_vod");

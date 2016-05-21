@@ -8,7 +8,7 @@ namespace BlackVueDownloader
     {
         private static void Main(string[] args)
         {
-            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            var version = Assembly.GetEntryAssembly().GetName().Version.ToString();
 
             Console.WriteLine($"BlackVue Downloader Version {version}");
 
@@ -31,9 +31,16 @@ namespace BlackVueDownloader
                 directory = args[1];
             }
 
-            var blackVueDownloader = new PCL.BlackVueDownloader();
 
-            blackVueDownloader.Run(ip, directory);
+            try
+            {
+                var blackVueDownloader = new PCL.BlackVueDownloader();
+                blackVueDownloader.Run(ip, directory);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine($"General exception {e.Message}");
+            }
         }
     }
 }

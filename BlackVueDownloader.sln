@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackVueDownloader", "BlackVueDownloader\BlackVueDownloader.csproj", "{A602BD08-12A1-4055-84A3-DF8D8CFE0683}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{28F470D8-E648-4C1C-B171-EA233F6F4BA6}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackVueDownloader.PCL", "BlackVueDownloader.PCL\BlackVueDownloader.PCL.csproj", "{86CDFC3F-F325-4DB1-848D-06511BEC255C}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BlackVueDownloader", "BlackVueDownloader\BlackVueDownloader.xproj", "{19C63847-32AB-43AC-8DB2-0F2C53AE76B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackVueDownloader.Tests", "BlackVueDownloader.Tests\BlackVueDownloader.Tests.csproj", "{84D76638-5BE6-42BA-90F7-74086509BDB7}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BlackVueDownloader.PCL", "BlackVueDownloader.PCL\BlackVueDownloader.PCL.xproj", "{45E5F9B3-8923-4208-976D-499C7DA09251}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BlackVueDownloader.Tests", "BlackVueDownloader.Tests\BlackVueDownloader.Tests.xproj", "{4A8532A1-14EC-449E-A09F-88B4A4625A1B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,18 +20,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A602BD08-12A1-4055-84A3-DF8D8CFE0683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A602BD08-12A1-4055-84A3-DF8D8CFE0683}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A602BD08-12A1-4055-84A3-DF8D8CFE0683}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A602BD08-12A1-4055-84A3-DF8D8CFE0683}.Release|Any CPU.Build.0 = Release|Any CPU
-		{86CDFC3F-F325-4DB1-848D-06511BEC255C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86CDFC3F-F325-4DB1-848D-06511BEC255C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86CDFC3F-F325-4DB1-848D-06511BEC255C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86CDFC3F-F325-4DB1-848D-06511BEC255C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{84D76638-5BE6-42BA-90F7-74086509BDB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{84D76638-5BE6-42BA-90F7-74086509BDB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{84D76638-5BE6-42BA-90F7-74086509BDB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{84D76638-5BE6-42BA-90F7-74086509BDB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19C63847-32AB-43AC-8DB2-0F2C53AE76B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19C63847-32AB-43AC-8DB2-0F2C53AE76B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19C63847-32AB-43AC-8DB2-0F2C53AE76B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19C63847-32AB-43AC-8DB2-0F2C53AE76B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45E5F9B3-8923-4208-976D-499C7DA09251}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45E5F9B3-8923-4208-976D-499C7DA09251}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45E5F9B3-8923-4208-976D-499C7DA09251}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45E5F9B3-8923-4208-976D-499C7DA09251}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A8532A1-14EC-449E-A09F-88B4A4625A1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A8532A1-14EC-449E-A09F-88B4A4625A1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A8532A1-14EC-449E-A09F-88B4A4625A1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A8532A1-14EC-449E-A09F-88B4A4625A1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

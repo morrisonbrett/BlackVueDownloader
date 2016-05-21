@@ -243,3 +243,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
+Record/
+BlackVueDownloader/Properties/launchSettings.json
