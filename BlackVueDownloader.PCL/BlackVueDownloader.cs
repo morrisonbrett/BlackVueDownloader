@@ -8,6 +8,17 @@ using Flurl.Http;
 
 namespace BlackVueDownloader.PCL
 {
+    public static class BlackVueDownloaderExtensions
+    {
+        public const string FILE_SEPARATOR = "\r\n";
+
+        // Extension method to parse file list response into string array
+        public static string [] ParseBody(this string s)
+        {
+            return s.Replace($"v:1.00{FILE_SEPARATOR}", "").Replace(FILE_SEPARATOR, " ").Split(' ');
+        }
+    }
+
     public class BlackVueDownloader
     {
         private readonly IFileSystemHelper _fileSystemHelper;
@@ -54,8 +65,8 @@ namespace BlackVueDownloader.PCL
         /// <returns>Normalized list of files</returns>
         public IList<string> GetListOfFilesFromResponse(string body)
         {
-            // Strip the header. Parse each element of the body by the separator, which is '\r\n'.  Replace with space, then split.
-            return body.Replace("v:1.00\r\n", "").Replace("\r\n", " ").Split(' ').Select(e => e.Replace("n:/Record/", "").Replace(",s:1000000", "")).ToList();
+            // Strip the header. Parse each element of the body, strip the non-filename part, and return a list.
+            return body.ParseBody().Select(e => e.Replace("n:/Record/", "").Replace(",s:1000000", "")).ToList();
         }
 
         /// <summary>

@@ -25,10 +25,10 @@ namespace BlackVueDownloader.Tests
 
             for (var i = 0; i < numRecords; i++)
             {
-                ret += $"n:/Record/{date}_{i}_NF.mp4,s:1000000\r\n";
+                ret += $"n:/Record/{date}_{i}_NF.mp4,s:1000000{BlackVueDownloaderExtensions.FILE_SEPARATOR}";
                 ret += $"n:/Record/{date}_{i}_NR.mp4,s:1000000";
                 if (i + 1 < numRecords)
-                    ret += "\r\n";
+                    ret += BlackVueDownloaderExtensions.FILE_SEPARATOR;
             }
 
             return ret;
@@ -51,10 +51,10 @@ namespace BlackVueDownloader.Tests
         }
 
         [Theory]
-        [InlineData("n:/Record/20160404_12345_NR.mp4,s:1000000\r\nn:/Record/20160404_12345_NF.mp4,s:1000000",
+        [InlineData("n:/Record/20160404_12345_NR.mp4,s:1000000" + BlackVueDownloaderExtensions.FILE_SEPARATOR + "n:/Record/20160404_12345_NF.mp4,s:1000000",
             "20160404_12345_NR.mp4", 2)]
         [InlineData(
-            "n:/Record/20160404_12345_NR.mp4,s:1000000\r\nn:/Record/20160404_12345_NF.mp4,s:1000000\r\nn:/Record/20160404_12346_NR.mp4,s:1000000\r\nn:/Record/20160404_12346_NF.mp4,s:1000000",
+            "n:/Record/20160404_12345_NR.mp4,s:1000000" + BlackVueDownloaderExtensions.FILE_SEPARATOR + "n:/Record/20160404_12345_NF.mp4,s:1000000" + BlackVueDownloaderExtensions.FILE_SEPARATOR + "n:/Record/20160404_12346_NR.mp4,s:1000000" + BlackVueDownloaderExtensions.FILE_SEPARATOR + "n:/Record/20160404_12346_NF.mp4,s:1000000",
             "20160404_12345_NR.mp4", 4)]
         public void GetListOfFilesFromResponseTest(string body, string firstval, int numelements)
         {
@@ -163,7 +163,7 @@ namespace BlackVueDownloader.Tests
 
                 Assert.True(!string.IsNullOrEmpty(body));
 
-                if (body != null) Assert.Equal(numRecords*2, body.Replace("\r\n", " ").Split(' ').Length);
+                if (body != null) Assert.Equal(numRecords*2, body.ParseBody().Length);
             }
         }
 
