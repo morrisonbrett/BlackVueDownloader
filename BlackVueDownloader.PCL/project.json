@@ -8,8 +8,8 @@
     "System.Runtime.Serialization.Primitives": "4.1.1-rc4-24206-05"
   },
   "frameworks": {
-    "netstandard1.5": {
-      "imports": [ "portable-net40+sl5+win8+wp8+wpa81", "dotnet", "dotnet5.4" ]
+    "netcoreapp1.0": {
+      "imports": "dnxcore50"
     }
   }
 }

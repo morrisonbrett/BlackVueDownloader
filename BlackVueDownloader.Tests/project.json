@@ -19,8 +19,7 @@
   "frameworks": {
     "netcoreapp1.0": {
       "imports": [
-        "dotnet",
-        "dotnet5.4",
+        "dnxcore50",
         "portable-net451+win8"
       ]
     }
