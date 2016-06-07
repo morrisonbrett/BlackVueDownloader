@@ -2,10 +2,7 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "Microsoft.NETCore.App": {
-      "type": "platform",
-      "version": "1.0.0-rc3-004410"
-    },
+    "Microsoft.NETCore.App": "1.0.0-rc4-000376",
     "BlackVueDownloader.PCL": "1.0.0-*",
     "xunit.runner.visualstudio": "2.2.0-beta1-build1144",
     "xunit.runner.console": "2.2.0-beta1-build3239",
@@ -23,5 +20,10 @@
         "portable-net451+win8"
       ]
     }
+  },
+  "runtimes": {
+    "win10": { },
+    "win10-arm": { },
+    "win10-x64": { }
   }
 }
