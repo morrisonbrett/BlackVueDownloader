@@ -4,16 +4,16 @@
   "dependencies": {
     "Microsoft.NETCore.App": {
       "type": "platform",
-      "version": "1.0.0-rc2-3002702"
+      "version": "1.0.0-rc3-004410"
     },
     "BlackVueDownloader.PCL": "1.0.0-*",
     "xunit.runner.visualstudio": "2.2.0-beta1-build1144",
     "xunit.runner.console": "2.2.0-beta1-build3239",
     "xunit": "2.2.0-beta1-build3239",
-    "Flurl.Http": "0.10.0",
+    "Flurl.Http": "0.10.1",
     "moq.netcore": "4.4.0-beta8",
-    "dotnet-test-xunit": "1.0.0-rc3-000000-00",
-    "System.Diagnostics.TraceSource": "4.0.0-rc3-24117-00"
+    "dotnet-test-xunit": "1.0.0-rc3-000000-02",
+    "System.Diagnostics.TraceSource": "4.0.0-rc4-24206-05"
   },
   "testRunner": "xunit",
   "frameworks": {

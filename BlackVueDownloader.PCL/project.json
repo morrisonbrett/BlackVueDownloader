@@ -2,10 +2,10 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "Newtonsoft.Json": "8.0.4-beta1",
-    "Flurl.Http": "0.10.0",
-    "NETStandard.Library": "1.5.0-rc3-24117-00",
-    "System.Runtime.Serialization.Primitives": "4.1.1-rc3-24117-00"
+    "Flurl.Http": "0.10.1",
+    "NETStandard.Library": "1.6.0-rc4-24206-05",
+    "Newtonsoft.Json": "9.0.1-beta1",
+    "System.Runtime.Serialization.Primitives": "4.1.1-rc4-24206-05"
   },
   "frameworks": {
     "netstandard1.5": {
