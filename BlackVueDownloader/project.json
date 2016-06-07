@@ -6,8 +6,7 @@
 
   "dependencies": {
     "BlackVueDownloader.PCL": "1.0.0-*",
-    "Microsoft.NETCore.App": "1.0.0-rc4-000376",
-    "System.Reflection": "4.1.0-rc4-24206-*"
+    "Microsoft.NETCore.App": "1.0.0-rc4-000376"
   },
 
   "frameworks": {
