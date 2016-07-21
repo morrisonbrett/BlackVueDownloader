@@ -1,5 +1,7 @@
 ## BlackVue Downloader
 
+[![Build status](https://ci.appveyor.com/api/projects/status/o8fkjskdnt82nr7q/branch/master?svg=true)](https://ci.appveyor.com/project/morrisonbrett/blackvuedownloader/branch/master)
+
 BlackVue Downloader was made to facilitate getting images from your [BlackVue Dashcam](http://www.blackvue.com/dr650gw-2ch/) to a hard disk without having to touch the camera.
 
 Without this program, you have to use the [mobile apps](http://www.blackvue.com/support/downloads/), [cloud service](http://www.blackvue.com/blackvue-over-the-cloud/), or you have to remove the SD Card from the camera, place it in a card reader, copy the files, eject the card, and put it back into the camera.  There's got to be a better way...
