@@ -62,4 +62,6 @@ $revision = "{0:D4}" -f [convert]::ToInt32($revision, 10)
 
 exec { & dotnet test .\BlackVueDownloader.Tests -c Release }
 
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts -f netcoreapp1.0 --version-suffix=$revision }  
+# --version-suffix not working yet
+#exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts -f netcoreapp1.0 --version-suffix=$revision }  
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts -f netcoreapp1.0 }  
