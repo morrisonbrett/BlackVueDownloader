@@ -64,4 +64,4 @@ exec { & dotnet test .\BlackVueDownloader.Tests -c Release }
 
 # --version-suffix not working yet
 #exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts -f netcoreapp1.0 --version-suffix=$revision }  
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts -f netcoreapp1.0 }  
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts -f netcoreapp1.0 }  
