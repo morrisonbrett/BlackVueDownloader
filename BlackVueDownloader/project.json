@@ -1,12 +1,19 @@
 {
+  "title": "BlackVueDownloader",
+  "authors": ["Brett Morrison"],
+  "copyright": "Copyright © 2016",
+  "description": "BlackVueDownloader - Video file Dashcam Downloader",
   "version": "1.0.0-*",
   "buildOptions": {
     "emitEntryPoint": true
   },
 
   "dependencies": {
-    "BlackVueDownloader.PCL": "1.0.0-*",
-    "Microsoft.NETCore.App": "1.0.0-rc4-000376"
+    "BlackVueDownloader.PCL": {
+      "target": "project",
+      "version": "1.0.0-*"
+    },
+    "Microsoft.NETCore.App": "1.0.0"
   },
 
   "frameworks": {

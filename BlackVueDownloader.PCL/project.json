@@ -1,6 +1,9 @@
 {
+  "title": "BlackVueDownloader Library",
+  "authors": ["Brett Morrison"],
+  "copyright": "Copyright © 2016",
+  "description": "BlackVueDownloader Library - Video file Dashcam Downloader services layer",
   "version": "1.0.0-*",
-
   "dependencies": {
     "Flurl.Http": "0.10.1",
     "NETStandard.Library": "1.6.0-rc4-24207-03",
