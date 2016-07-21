@@ -15,7 +15,7 @@ artifacts:
 - path: 'BackVueDownloader-v$(appveyor_build_version).zip'
   name: BackVueDownloader
 deploy:
-  release: 'BackVueDownloader-v$(appveyor_build_version)
+  release: 'BackVueDownloader-v$(appveyor_build_version)'
   description: 'BlackVueDownloader Release v$(appveyor_build_version)'
   provider: GitHub
   auth_token:
