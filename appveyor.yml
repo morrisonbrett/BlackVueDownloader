@@ -9,20 +9,18 @@ nuget:
 build_script:  
 - ps: .\Build.ps1
 test: off
+after_build:
+    - 7z a -tzip BackVueDownloader-v$(appveyor_build_version).zip %APPVEYOR_BUILD_FOLDER%\bin\Release\netcoreapp1.0\win10-x64
 artifacts:  
-- path: .\artifacts\*.*
-  name: Binaries
-
-  path: .\artifacts\zip\BackVueDownloader-v$(appveyor_build_version).zip
-  name: Zipped Artifacts
-  type: zip
+- path: BackVueDownloader-v$(appveyor_build_version).zip
+  name: BackVueDownloader
 deploy:
   release: BackVueDownloader-v$(appveyor_build_version)
-  description: 'BlackVueDownloader Release'
+  description: 'BlackVueDownloader Release v$(appveyor_build_version)'
   provider: GitHub
   auth_token:
     secure: +L7awVOpkoS9AFH2iw1R84aEas7eGSFoR1MmKz285Svi8M2H3cSZ8h47bG9NRenw
-  artifact: .\artifacts\zip\BackVueDownloader-v$(appveyor_build_version).zip
+  artifact: Binaries
   draft: false
   prerelease: false
   on:
