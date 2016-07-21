@@ -10,9 +10,9 @@ build_script:
 - ps: .\Build.ps1
 test: off
 after_build:
-    - 7z a -tzip 'BackVueDownloader-v$(appveyor_build_version).zip' .\artifacts
+    - 7z a -tzip BackVueDownloader-v$(appveyor_build_version).zip .\artifacts
 artifacts:  
-- path: 'BackVueDownloader-v$(appveyor_build_version).zip'
+- path: BackVueDownloader-v$(appveyor_build_version).zip
   name: BackVueDownloader
 deploy:
   release: 'BackVueDownloader-v$(appveyor_build_version)'
