@@ -10,12 +10,12 @@ build_script:
 - ps: .\Build.ps1
 test: off
 after_build:
-    - 7z a -tzip BackVueDownloader-v$(appveyor_build_version).zip %APPVEYOR_BUILD_FOLDER%\bin\Release\netcoreapp1.0\win10-x64
+    - 7z a -tzip BackVueDownloader.zip .\artifacts
 artifacts:  
-- path: BackVueDownloader-v$(appveyor_build_version).zip
+- path: BackVueDownloader.zip
   name: BackVueDownloader
 deploy:
-  release: BackVueDownloader-v$(appveyor_build_version)
+  release: 'BackVueDownloader-v$(appveyor_build_version)'
   description: 'BlackVueDownloader Release v$(appveyor_build_version)'
   provider: GitHub
   auth_token:
