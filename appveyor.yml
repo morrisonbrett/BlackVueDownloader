@@ -12,3 +12,19 @@ test: off
 artifacts:  
 - path: .\artifacts\*.*
   name: Binaries
+
+  path: .\artifacts\zip\BackVueDownloader-v$(appveyor_build_version).zip
+  name: Zipped Artifacts
+  type: zip
+deploy:
+  release: BackVueDownloader-v$(appveyor_build_version)
+  description: 'BlackVueDownloader Release'
+  provider: GitHub
+  auth_token:
+    secure: +L7awVOpkoS9AFH2iw1R84aEas7eGSFoR1MmKz285Svi8M2H3cSZ8h47bG9NRenw
+  artifact: .\artifacts\zip\BackVueDownloader-v$(appveyor_build_version).zip
+  draft: false
+  prerelease: false
+  on:
+    branch: master
+    appveyor_repo_tag: true
