@@ -20,7 +20,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: +L7awVOpkoS9AFH2iw1R84aEas7eGSFoR1MmKz285Svi8M2H3cSZ8h47bG9NRenw
-  artifact: Binaries
+  artifact: BackVueDownloader
   draft: false
   prerelease: false
   on:
