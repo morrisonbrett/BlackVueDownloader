@@ -73,7 +73,7 @@ namespace BlackVueDownloader.Tests
 
             using (var httpTest = new HttpTest())
             {
-                httpTest.RespondWith(200, "this is the body");
+                httpTest.RespondWith("this is the body");
 
                 var body = blackVueDownloader.QueryCameraForFileList(ip);
 
@@ -91,7 +91,7 @@ namespace BlackVueDownloader.Tests
 
             using (var httpTest = new HttpTest())
             {
-                httpTest.RespondWith(200, "");
+                httpTest.RespondWith("");
 
                 var body = blackVueDownloader.QueryCameraForFileList(ip);
 
@@ -109,7 +109,7 @@ namespace BlackVueDownloader.Tests
 
             using (var httpTest = new HttpTest())
             {
-                httpTest.RespondWith(500, "Simulated Error");
+                httpTest.RespondWith("Simulated Error", 500);
 
                 try
                 {
@@ -155,7 +155,7 @@ namespace BlackVueDownloader.Tests
 
             using (var httpTest = new HttpTest())
             {
-                httpTest.RespondWith(200, GenerateRecords(numRecords));
+                httpTest.RespondWith(GenerateRecords(numRecords));
 
                 var body = blackVueDownloader.QueryCameraForFileList(ip);
 
@@ -186,7 +186,7 @@ namespace BlackVueDownloader.Tests
             // Success test
             for (var i = 0; i < numRecords*4; i++)
             {
-                httpTest.RespondWith(200, "OK");
+                httpTest.RespondWith("OK");
             }
             blackVueDownloader.BlackVueDownloaderCopyStats.Clear();
             blackVueDownloader.ProcessList(ip, Directory.GetCurrentDirectory(), list);
@@ -205,7 +205,7 @@ namespace BlackVueDownloader.Tests
             // Fail test
             for (var i = 0; i < numRecords*4; i++)
             {
-                httpTest.RespondWith(500, "FAILURE");
+                httpTest.RespondWith("FAILURE", 500);
             }
             blackVueDownloader.BlackVueDownloaderCopyStats.Clear();
             blackVueDownloader.ProcessList(ip, Directory.GetCurrentDirectory(), list);
