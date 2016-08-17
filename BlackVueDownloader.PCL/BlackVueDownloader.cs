@@ -15,7 +15,7 @@ namespace BlackVueDownloader.PCL
         // Extension method to parse file list response into string array
         public static string [] ParseBody(this string s)
         {
-            return s.Replace($"v:1.00{FILE_SEPARATOR}", "").Replace(FILE_SEPARATOR, " ").Split(' ');
+            return s.Replace($"v:1.00{FILE_SEPARATOR}", "").Replace($"v:2.00{FILE_SEPARATOR}", "").Replace(FILE_SEPARATOR, " ").Split(' ');
         }
     }
 
