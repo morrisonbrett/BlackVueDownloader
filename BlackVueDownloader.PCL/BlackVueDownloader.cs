@@ -49,7 +49,21 @@ namespace BlackVueDownloader.PCL
             var body = QueryCameraForFileList(ip);
             var list = GetListOfFilesFromResponse(body);
 
-            ProcessList(ip, directory, list);
+            var tempdir = Path.Combine(directory, "_tmp");
+            var targetdir = Path.Combine(directory, "Record");
+
+            CreateDirectories(tempdir, targetdir);
+
+            ProcessList(ip, list, tempdir, targetdir);
+        }
+
+        public void CreateDirectories(string tempdir, string targetdir)
+        {
+            if (!_fileSystemHelper.DirectoryExists(tempdir))
+                _fileSystemHelper.CreateDirectory(tempdir);
+
+            if (!_fileSystemHelper.DirectoryExists(targetdir))
+                _fileSystemHelper.CreateDirectory(targetdir);
         }
 
         public static bool IsValidIp(string ip)
@@ -73,10 +87,9 @@ namespace BlackVueDownloader.PCL
         /// For given camera ip, filename, and filetype, download the file and return a status
         /// </summary>
         /// <param name="ip"></param>
-        /// <param name="directory"></param>
         /// <param name="filename"></param>
         /// <param name="filetype"></param>
-        public void DownloadFile(string ip, string directory, string filename, string filetype)
+        public void DownloadFile(string ip, string filename, string filetype, string tempdir, string targetdir)
         {
             string filepath = "";
 
@@ -86,7 +99,7 @@ namespace BlackVueDownloader.PCL
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Path Combine exception for directory {directory}, filename {filename}, Exception Message: {e.Message}");
+                Console.WriteLine($"Path Combine exception for filepath {filepath}, filename {filename}, Exception Message: {e.Message}");
                 BlackVueDownloaderCopyStats.Errored++;
                 return;
             }
@@ -102,8 +115,18 @@ namespace BlackVueDownloader.PCL
                 {
                     var url = $"http://{ip}/Record/{filename}";
                     Console.WriteLine($"Downloading {filetype} file: {url}");
-                    var path = url.DownloadFileAsync(Path.Combine(directory, "Record"));
-                    path.Wait();
+
+                    var tempfile = Path.Combine(tempdir, filename);
+                    var targetfile = Path.Combine(targetdir, filename);
+
+                    // Copy to the temp directory, that way, if the file is partially downloaded,
+                    // it won't leave a partial file in the target directory
+                    url.DownloadFileAsync(tempdir).Wait();
+
+                    // File downloaded. Move from temp to target.
+                    _fileSystemHelper.Move(tempfile, targetfile);
+
+                    Console.WriteLine($"Downloaded {filetype} file: {url}");
                     BlackVueDownloaderCopyStats.Copied++;
                 }
                 catch (FlurlHttpTimeoutException e)
@@ -132,9 +155,8 @@ namespace BlackVueDownloader.PCL
         /// For the list, loop through and process it
         /// </summary>
         /// <param name="ip"></param>
-        /// <param name="directory"></param>
         /// <param name="list"></param>
-        public void ProcessList(string ip, string directory, IList<string> list)
+        public void ProcessList(string ip, IList<string> list, string tempdir, string targetdir)
         {
             var sw = new Stopwatch();
             sw.Start();
@@ -145,17 +167,17 @@ namespace BlackVueDownloader.PCL
             {
                 Console.WriteLine($"Processing File: {s}");
 
-                DownloadFile(ip, directory, s, "video");
+                DownloadFile(ip, s, "video", tempdir, targetdir);
 
                 // Line below because the list may includes _NF and _NR.  Only continue if it's an NF.
                 // Otherwise it's trying to download files that are probably already downloaded
                 if (!s.Contains("_NF.mp4")) continue;
 
                 var gpsfile = s.Replace("_NF.mp4", "_N.gps");
-                DownloadFile(ip, directory, gpsfile, "gps");
+                DownloadFile(ip, gpsfile, "gps", tempdir, targetdir);
 
                 var gffile = s.Replace("_NF.mp4", "_N.3gf");
-                DownloadFile(ip, directory, gffile, "3gf");
+                DownloadFile(ip, gffile, "3gf", tempdir, targetdir);
             }
 
             sw.Stop();

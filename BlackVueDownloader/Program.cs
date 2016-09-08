@@ -31,7 +31,6 @@ namespace BlackVueDownloader
                 directory = args[1];
             }
 
-
             try
             {
                 var blackVueDownloader = new PCL.BlackVueDownloader();
