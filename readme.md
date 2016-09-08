@@ -34,4 +34,4 @@ My personal usage of this program is setup to run as a scheduled task, and it co
 
 The next major release will have a browser-based UI for setting options and viewing activity as it runs.  It will also facilitate connecting, and looping for continuous runs.
 
-[Contributions](https://github.com/morrisonbrett/BlackVueDownloader#fork-destination-box) welcome!
+Contributions welcome!
