@@ -1,6 +1,6 @@
 {
   "title": "BlackVueDownloader Library",
-  "authors": ["Brett Morrison"],
+  "authors": [ "Brett Morrison" ],
   "copyright": "Copyright © 2016",
   "description": "BlackVueDownloader Library - Video file Dashcam Downloader services layer",
   "version": "1.0.0-*",
@@ -14,5 +14,13 @@
     "netcoreapp1.0": {
       "imports": "dnxcore50"
     }
+  },
+  "runtimes": {
+    "win81-x64": {},
+    "win10": {},
+    "win10-arm": {},
+    "win10-x64": {},
+    "osx.10.10-x64": {},
+    "ubuntu.14.04-x64": {}
   }
 }

@@ -58,10 +58,15 @@ Set-MsBuild "C:\Program Files (x86)\MSBuild\14.0\bin\msbuild.exe"
 Invoke-MSBuild
 
 $revision = @{ $true = $env:APPVEYOR_BUILD_NUMBER; $false = 1 }[$env:APPVEYOR_BUILD_NUMBER -ne $NULL];
-$revision = "{0:D4}" -f [convert]::ToInt32($revision, 10)
+$revision = "{0}" -f [convert]::ToInt32($revision, 10)
 
 exec { & dotnet test .\BlackVueDownloader.Tests -c Release }
 
-# --version-suffix not working yet
-#exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts -f netcoreapp1.0 --version-suffix=$revision }  
-exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts -f netcoreapp1.0 }  
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win10-x64 -f netcoreapp1.0 -r win10-x64 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win10-x64 -f netcoreapp1.0 -r win10-x64 --version-suffix=$revision }
+
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\osx.10.10-x64 -f netcoreapp1.0 -r osx.10.10-x64 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\osx.10.10-x64 -f netcoreapp1.0 -r osx.10.10-x64 --version-suffix=$revision }
+
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.14.04-x64 -f netcoreapp1.0 -r ubuntu.14.04-x64 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.14.04-x64 -f netcoreapp1.0 -r ubuntu.14.04-x64 --version-suffix=$revision }

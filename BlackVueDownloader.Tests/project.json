@@ -14,7 +14,8 @@
     "Microsoft.NETCore.App": "1.0.1",
     "Microsoft.Win32.Primitives": "4.0.2-beta-24302-03",
     "System.Collections.Concurrent": "4.0.13-beta-24302-03",
-    "System.Diagnostics.TraceSource": "4.0.0"  },
+    "System.Diagnostics.TraceSource": "4.0.0"
+  },
   "testRunner": "xunit",
   "frameworks": {
     "netcoreapp1.0": {
