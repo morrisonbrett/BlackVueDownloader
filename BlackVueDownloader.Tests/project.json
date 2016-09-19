@@ -5,7 +5,7 @@
       "target": "project",
       "version": "1.0.0-*"
     },
-    "Flurl.Http": "1.0.1",
+    "Flurl.Http": "1.0.2",
     "moq.netcore": "4.4.0-beta8",
     "xunit.runner.console": "2.2.0-beta2-build3300",
     "xunit.runner.visualstudio": "2.2.0-beta2-build1149",
@@ -25,9 +25,11 @@
     }
   },
   "runtimes": {
-    "win81-x64": { },
-    "win10": { },
-    "win10-arm": { },
-    "win10-x64": { }
+    "win81-x64": {},
+    "win10": {},
+    "win10-arm": {},
+    "win10-x64": {},
+    "osx.10.10-x64": {},
+    "ubuntu.14.04-x64": {}
   }
 }
