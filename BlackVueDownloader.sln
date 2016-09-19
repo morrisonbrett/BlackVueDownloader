@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
 		Build.ps1 = Build.ps1
+		clean.bat = clean.bat
 		global.json = global.json
 		Nuget.config = Nuget.config
 		readme.md = readme.md
