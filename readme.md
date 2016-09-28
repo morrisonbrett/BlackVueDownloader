@@ -12,7 +12,7 @@ Fortunately, there is.  BlackVueDownloader connects to your dashcam wirelessly a
 
 1. Download the latest zip of the program from the ["Releases"](https://github.com/morrisonbrett/BlackVueDownloader/releases) tab above and expand the zip into a directory.
 2. Connect to the Ad-Hoc WiFi network of the camera.  It's recommended to use a [dedicated USB WiFi adapter](https://amzn.com/B008IFXQFU) for connecting to the camera.  This frees up your primary WiFi connection to remain connected to your home network.  This approach also works if you have a wired ethernet connected desktop PC.  Set it up to auto-connect, and as your vehicle enters the range of your computer, it should re-connect.
-3. Open a command prompt, or create a scheduled task and run ``> BlackVueDownloader.exe <ipaddress> [destinationdirectory]``.  The default address of the camera is usually 10.99.77.1.
+3. Open a command prompt, or create a scheduled task and run ``> BlackVueDownloader.exe <ipaddress> [destinationdirectory]``.  The default address of the camera is usually 10.99.77.1.  For macOS / Linux, run ``$ ./BlackVueDownloader <ipaddress> [destinationdirectory]``.
 
 This will copy the video and GPS files into the 'Record' directory.  The first time you run it, it will take a while, depending on the WiFi throughput you get.
 
