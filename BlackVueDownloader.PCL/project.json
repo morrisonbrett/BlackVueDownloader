@@ -5,10 +5,11 @@
   "description": "BlackVueDownloader Library - Video file Dashcam Downloader services layer",
   "version": "1.0.0-*",
   "dependencies": {
-    "Flurl.Http": "1.0.2",
+    "Flurl.Http": "1.0.3",
     "NETStandard.Library": "1.6.0",
     "Newtonsoft.Json": "9.0.1",
-    "System.Runtime.Serialization.Primitives": "4.1.1"
+    "System.Runtime.Serialization.Primitives": "4.1.1",
+    "System.Net.Http": "4.1.0"
   },
   "frameworks": {
     "netcoreapp1.0": {
