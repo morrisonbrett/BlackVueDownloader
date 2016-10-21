@@ -10,7 +10,7 @@
     "xunit.runner.visualstudio": "2.2.0-beta2-build1149",
     "xunit": "2.2.0-beta2-build3300",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
-    "Microsoft.NETCore.App": "1.0.1",
+    "Microsoft.NETCore.App": "1.0.2",
     "Microsoft.Win32.Primitives": "4.0.2-beta-24302-03",
     "System.Collections.Concurrent": "4.0.13-beta-24302-03",
     "System.Diagnostics.TraceSource": "4.0.0",
