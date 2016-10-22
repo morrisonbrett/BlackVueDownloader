@@ -11,7 +11,7 @@ Fortunately, there is.  BlackVueDownloader connects to your dashcam wirelessly a
 ## Installation and Usage
 
 1. Download the latest zip of the program from the ["Releases"](https://github.com/morrisonbrett/BlackVueDownloader/releases) tab above and expand the zip into a directory.  Navigate to the desired target directory inside the 'artifacts' directory.
-2. macOS users must also install [openssl](https://www.openssl.org/).  Copy / Paste each of these commands into a command prompt. Windows / Linux users can skip this step.<br/>
+2. macOS users must also install [openssl](https://www.openssl.org/).  Install [brew](http://brew.sh/), then Copy / Paste each of these commands into a command prompt. Windows / Linux users can skip this step.<br/>
     ``$ brew update``<br/>
     ``$ brew install openssl``<br/>
     ``$ ln -s /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib /usr/local/lib/``<br/>
