@@ -65,6 +65,12 @@ exec { & dotnet test .\BlackVueDownloader.Tests -c Release }
 exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win10-x64 -f netcoreapp1.0 -r win10-x64 --version-suffix=$revision }
 exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win10-x64 -f netcoreapp1.0 -r win10-x64 --version-suffix=$revision }
 
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win7-x64 -f netcoreapp1.0 -r win7-x64 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win7-x64 -f netcoreapp1.0 -r win7-x64 --version-suffix=$revision }
+
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win7-x86 -f netcoreapp1.0 -r win7-x86 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win7-x86 -f netcoreapp1.0 -r win7-x86 --version-suffix=$revision }
+
 exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\osx.10.10-x64 -f netcoreapp1.0 -r osx.10.10-x64 --version-suffix=$revision }
 exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\osx.10.10-x64 -f netcoreapp1.0 -r osx.10.10-x64 --version-suffix=$revision }
 
