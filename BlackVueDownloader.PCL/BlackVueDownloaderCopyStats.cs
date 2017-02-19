@@ -8,6 +8,7 @@ namespace BlackVueDownloader.PCL
         public int Ignored { get; set; }
         public TimeSpan TotalTime { get; set; }
         public int Errored { get; set; }
+        public int TmpDeleted { get; set; }
 
         public void Clear()
         {
@@ -15,6 +16,7 @@ namespace BlackVueDownloader.PCL
             Ignored = 0;
             TotalTime = TimeSpan.MinValue;
             Errored = 0;
+            TmpDeleted = 0;
         }
     }
 }

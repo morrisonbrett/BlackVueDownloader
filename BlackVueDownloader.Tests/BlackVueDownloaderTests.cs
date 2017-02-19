@@ -243,5 +243,25 @@ namespace BlackVueDownloader.Tests
 
             Assert.Equal(1, blackVueDownloader.BlackVueDownloaderCopyStats.Ignored);
         }
+
+        [Theory]
+        [InlineData("192.168.1.99")]
+        public void DownloadFileTmpExistsTest(string ip)
+        {
+            var targetdir = Path.Combine(Directory.GetCurrentDirectory(), "_tmp");
+
+            var filesystem = new Mock<IFileSystemHelper>();
+
+            var blackVueDownloader = new PCL.BlackVueDownloader(filesystem.Object);
+            var blackVueDownloaderNoMock = new PCL.BlackVueDownloader();
+
+            blackVueDownloaderNoMock.CreateDirectories(targetdir, targetdir);
+
+            filesystem.Setup(x => x.Exists(Path.Combine("_tmp", "ignorefile.mp4"))).Returns(true);
+            filesystem.Setup(x => x.Delete(Path.Combine("_tmp", "ignorefile.mp4")));
+            blackVueDownloader.DownloadFile(ip, "ignorefile.mp4", "video", targetdir, targetdir);
+
+            Assert.Equal(1, blackVueDownloader.BlackVueDownloaderCopyStats.TmpDeleted);
+        }
     }
 }

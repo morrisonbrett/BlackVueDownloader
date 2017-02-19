@@ -92,6 +92,7 @@ namespace BlackVueDownloader.PCL
         public void DownloadFile(string ip, string filename, string filetype, string tempdir, string targetdir)
         {
             string filepath = "";
+            string temp_filepath = "";
 
             try
             {
@@ -99,7 +100,18 @@ namespace BlackVueDownloader.PCL
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Path Combine exception for filepath {filepath}, filename {filename}, Exception Message: {e.Message}");
+                Console.WriteLine($"Path Combine exception for filepath, filename {filename}, Exception Message: {e.Message}");
+                BlackVueDownloaderCopyStats.Errored++;
+                return;
+            }
+
+            try
+            {
+                temp_filepath = Path.Combine("_tmp", filename);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Path Combine exception for temp_filepath, filename {filename}, Exception Message: {e.Message}");
                 BlackVueDownloaderCopyStats.Errored++;
                 return;
             }
@@ -118,6 +130,14 @@ namespace BlackVueDownloader.PCL
 
                     var tempfile = Path.Combine(tempdir, filename);
                     var targetfile = Path.Combine(targetdir, filename);
+
+                    // If it already exists in the _tmp directory, delete it.
+                    if (_fileSystemHelper.Exists(temp_filepath))
+                    {
+                        Console.WriteLine($"File exists in tmp {temp_filepath}, deleting");
+                        BlackVueDownloaderCopyStats.TmpDeleted++;
+                        _fileSystemHelper.Delete(temp_filepath);
+                    }
 
                     // Copy to the temp directory, that way, if the file is partially downloaded,
                     // it won't leave a partial file in the target directory
@@ -184,7 +204,7 @@ namespace BlackVueDownloader.PCL
             BlackVueDownloaderCopyStats.TotalTime = sw.Elapsed;
 
             Console.WriteLine(
-                $"Copied {BlackVueDownloaderCopyStats.Copied}, Ignored {BlackVueDownloaderCopyStats.Ignored}, Errored {BlackVueDownloaderCopyStats.Errored} TotalTime {BlackVueDownloaderCopyStats.TotalTime}");
+                $"Copied {BlackVueDownloaderCopyStats.Copied}, Ignored {BlackVueDownloaderCopyStats.Ignored}, Errored {BlackVueDownloaderCopyStats.Errored}, TmpDeleted {BlackVueDownloaderCopyStats.TmpDeleted}, TotalTime {BlackVueDownloaderCopyStats.TotalTime}");
         }
 
         /// <summary>
