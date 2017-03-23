@@ -96,7 +96,7 @@ namespace BlackVueDownloader.PCL
 
             try
             {
-                filepath = Path.Combine("Record", filename);
+                filepath = Path.Combine(targetdir, filename);
             }
             catch (Exception e)
             {
@@ -107,7 +107,7 @@ namespace BlackVueDownloader.PCL
 
             try
             {
-                temp_filepath = Path.Combine("_tmp", filename);
+                temp_filepath = Path.Combine(tempdir, filename);
             }
             catch (Exception e)
             {
