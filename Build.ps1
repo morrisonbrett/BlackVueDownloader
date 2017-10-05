@@ -54,7 +54,7 @@ EnsurePsbuildInstalled
 
 exec { & dotnet restore }
 
-Set-MsBuild "C:\Program Files (x86)\MSBuild\15.0\bin\msbuild.exe"
+Set-MsBuild "C:\Program Files (x86)\MSBuild\14.0\bin\msbuild.exe"
 Invoke-MSBuild
 
 $revision = @{ $true = $env:APPVEYOR_BUILD_NUMBER; $false = 1 }[$env:APPVEYOR_BUILD_NUMBER -ne $NULL];
@@ -76,3 +76,6 @@ exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\osx.10.10
 
 exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.14.04-x64 -f netcoreapp2.0 -r ubuntu.14.04-x64 --version-suffix=$revision }
 exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.14.04-x64 -f netcoreapp2.0 -r ubuntu.14.04-x64 --version-suffix=$revision }
+
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.16.04-x64 -f netcoreapp2.0 -r ubuntu.16.04-x64 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.16.04-x64 -f netcoreapp2.0 -r ubuntu.16.04-x64 --version-suffix=$revision }
