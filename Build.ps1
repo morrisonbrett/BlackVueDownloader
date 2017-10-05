@@ -54,7 +54,7 @@ EnsurePsbuildInstalled
 
 exec { & dotnet restore }
 
-Set-MsBuild "C:\Program Files (x86)\MSBuild\14.0\bin\msbuild.exe"
+Set-MsBuild "C:\Program Files (x86)\MSBuild\15.0\bin\msbuild.exe"
 Invoke-MSBuild
 
 $revision = @{ $true = $env:APPVEYOR_BUILD_NUMBER; $false = 1 }[$env:APPVEYOR_BUILD_NUMBER -ne $NULL];
@@ -62,17 +62,17 @@ $revision = "{0}" -f [convert]::ToInt32($revision, 10)
 
 exec { & dotnet test .\BlackVueDownloader.Tests -c Release }
 
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win10-x64 -f netcoreapp1.0 -r win10-x64 --version-suffix=$revision }
-exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win10-x64 -f netcoreapp1.0 -r win10-x64 --version-suffix=$revision }
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win10-x64 -f netcoreapp2.0 -r win10-x64 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win10-x64 -f netcoreapp2.0 -r win10-x64 --version-suffix=$revision }
 
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win7-x64 -f netcoreapp1.0 -r win7-x64 --version-suffix=$revision }
-exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win7-x64 -f netcoreapp1.0 -r win7-x64 --version-suffix=$revision }
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win7-x64 -f netcoreapp2.0 -r win7-x64 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win7-x64 -f netcoreapp2.0 -r win7-x64 --version-suffix=$revision }
 
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win7-x86 -f netcoreapp1.0 -r win7-x86 --version-suffix=$revision }
-exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win7-x86 -f netcoreapp1.0 -r win7-x86 --version-suffix=$revision }
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win7-x86 -f netcoreapp2.0 -r win7-x86 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win7-x86 -f netcoreapp2.0 -r win7-x86 --version-suffix=$revision }
 
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\osx.10.10-x64 -f netcoreapp1.0 -r osx.10.10-x64 --version-suffix=$revision }
-exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\osx.10.10-x64 -f netcoreapp1.0 -r osx.10.10-x64 --version-suffix=$revision }
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\osx.10.10-x64 -f netcoreapp2.0 -r osx.10.10-x64 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\osx.10.10-x64 -f netcoreapp2.0 -r osx.10.10-x64 --version-suffix=$revision }
 
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.14.04-x64 -f netcoreapp1.0 -r ubuntu.14.04-x64 --version-suffix=$revision }
-exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.14.04-x64 -f netcoreapp1.0 -r ubuntu.14.04-x64 --version-suffix=$revision }
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.14.04-x64 -f netcoreapp2.0 -r ubuntu.14.04-x64 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.14.04-x64 -f netcoreapp2.0 -r ubuntu.14.04-x64 --version-suffix=$revision }
