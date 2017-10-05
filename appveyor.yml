@@ -12,19 +12,19 @@ test: off
 after_build:
     - cd
     - dir
-    - dir .\BackVueDownloader /s
-    - 7z a -tzip BackVueDownloader.zip .\BackVueDownloader\artifacts
-    - dir .\BackVueDownloader /s
+    - dir .\BlackVueDownloader /s
+    - 7z a -tzip BlackVueDownloader.zip .\BlackVueDownloader\artifacts
+    - dir .\BlackVueDownloader /s
 artifacts:  
-- path: BackVueDownloader.zip
-  name: BackVueDownloader
+- path: BlackVueDownloader.zip
+  name: BlackVueDownloader
 deploy:
   release: 'v1.1.$(appveyor_build_version)'
   description: 'Release v1.1.$(appveyor_build_version)'
   provider: GitHub
   auth_token:
     secure: +L7awVOpkoS9AFH2iw1R84aEas7eGSFoR1MmKz285Svi8M2H3cSZ8h47bG9NRenw
-  artifact: BackVueDownloader
+  artifact: BlackVueDownloader
   draft: false
   prerelease: false
   on:
