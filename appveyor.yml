@@ -12,9 +12,9 @@ test: off
 after_build:
     - cd
     - dir
-    - dir .\BackVueDownloader\artifacts
+    - dir .\BackVueDownloader /s
     - 7z a -tzip BackVueDownloader.zip .\BackVueDownloader\artifacts
-    - dir
+    - dir .\BackVueDownloader /s
 artifacts:  
 - path: BackVueDownloader.zip
   name: BackVueDownloader
