@@ -238,7 +238,7 @@ namespace BlackVueDownloader.Tests
 
             blackVueDownloaderNoMock.CreateDirectories(targetdir, targetdir);
 
-            filesystem.Setup(x => x.Exists(Path.Combine("Record", "ignorefile.mp4"))).Returns(true);
+            filesystem.Setup(x => x.Exists(Path.Combine(targetdir, "ignorefile.mp4"))).Returns(true);
             blackVueDownloader.DownloadFile(ip, "ignorefile.mp4", "video", targetdir, targetdir);
 
             Assert.Equal(1, blackVueDownloader.BlackVueDownloaderCopyStats.Ignored);
@@ -248,20 +248,20 @@ namespace BlackVueDownloader.Tests
         [InlineData("192.168.1.99")]
         public void DownloadFileTmpExistsTest(string ip)
         {
-            var targetdir = Path.Combine(Directory.GetCurrentDirectory(), "_tmp");
+            var tempdir = Path.Combine(Directory.GetCurrentDirectory(), "_tmp");
 
             var filesystem = new Mock<IFileSystemHelper>();
 
             var blackVueDownloader = new PCL.BlackVueDownloader(filesystem.Object);
             var blackVueDownloaderNoMock = new PCL.BlackVueDownloader();
 
-            blackVueDownloaderNoMock.CreateDirectories(targetdir, targetdir);
+            blackVueDownloaderNoMock.CreateDirectories(tempdir, tempdir);
 
-            filesystem.Setup(x => x.Exists(Path.Combine("_tmp", "ignorefile.mp4"))).Returns(true);
-            filesystem.Setup(x => x.Delete(Path.Combine("_tmp", "ignorefile.mp4")));
-            blackVueDownloader.DownloadFile(ip, "ignorefile.mp4", "video", targetdir, targetdir);
+            filesystem.Setup(x => x.Exists(Path.Combine(tempdir, "ignorefile.mp4"))).Returns(true);
+            filesystem.Setup(x => x.Delete(Path.Combine(tempdir, "ignorefile.mp4")));
+            blackVueDownloader.DownloadFile(ip, Path.Combine(tempdir, "ignorefile.mp4"), "video", tempdir, tempdir);
 
-            Assert.Equal(1, blackVueDownloader.BlackVueDownloaderCopyStats.TmpDeleted);
+            Assert.Equal(1, blackVueDownloader.BlackVueDownloaderCopyStats.Ignored);
         }
     }
 }
