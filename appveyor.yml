@@ -10,6 +10,8 @@ build_script:
 - ps: .\Build.ps1
 test: off
 after_build:
+    - cd
+    - dir
     - 7z a -tzip BackVueDownloader.zip .\artifacts
 artifacts:  
 - path: BackVueDownloader.zip
