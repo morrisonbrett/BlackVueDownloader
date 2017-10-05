@@ -96,7 +96,7 @@ namespace BlackVueDownloader.PCL
 
             try
             {
-                filepath = Path.Combine("Record", filename);
+                filepath = Path.Combine(targetdir, filename);
             }
             catch (Exception e)
             {
@@ -107,7 +107,7 @@ namespace BlackVueDownloader.PCL
 
             try
             {
-                temp_filepath = Path.Combine("_tmp", filename);
+                temp_filepath = Path.Combine(tempdir, filename);
             }
             catch (Exception e)
             {
@@ -126,7 +126,6 @@ namespace BlackVueDownloader.PCL
                 try
                 {
                     var url = $"http://{ip}/Record/{filename}";
-                    Console.WriteLine($"Downloading {filetype} file: {url}");
 
                     var tempfile = Path.Combine(tempdir, filename);
                     var targetfile = Path.Combine(targetdir, filename);
@@ -139,9 +138,10 @@ namespace BlackVueDownloader.PCL
                         _fileSystemHelper.Delete(temp_filepath);
                     }
 
-                    // Copy to the temp directory, that way, if the file is partially downloaded,
-                    // it won't leave a partial file in the target directory
-                    url.DownloadFileAsync(tempdir).Wait();
+					// Download to the temp directory, that way, if the file is partially downloaded,
+					// it won't leave a partial file in the target directory
+					Console.WriteLine($"Downloading {filetype} file: {url}");
+					url.DownloadFileAsync(tempdir).Wait();
 
                     // File downloaded. Move from temp to target.
                     _fileSystemHelper.Move(tempfile, targetfile);
@@ -189,14 +189,16 @@ namespace BlackVueDownloader.PCL
 
                 DownloadFile(ip, s, "video", tempdir, targetdir);
 
-                // Line below because the list may includes _NF and _NR.  Only continue if it's an NF.
+                // Line below because the list may include _NF and _NR named files.  Only continue if it's an NF.
                 // Otherwise it's trying to download files that are probably already downloaded
                 if (!s.Contains("_NF.mp4")) continue;
 
+				// Make filenames for accompanying gps file
                 var gpsfile = s.Replace("_NF.mp4", "_N.gps");
                 DownloadFile(ip, gpsfile, "gps", tempdir, targetdir);
 
-                var gffile = s.Replace("_NF.mp4", "_N.3gf");
+				// Make filenames for accompanying gff file
+				var gffile = s.Replace("_NF.mp4", "_N.3gf");
                 DownloadFile(ip, gffile, "3gf", tempdir, targetdir);
             }
 
