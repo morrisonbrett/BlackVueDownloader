@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>BlackVueDownloader - Video file Dashcam Downloader</Description>
+    <Copyright>Copyright © 2017</Copyright>
+    <AssemblyTitle>BlackVueDownloader</AssemblyTitle>
+    <Authors>Brett Morrison</Authors>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>BlackVueDownloader</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>BlackVueDownloader</PackageId>
+    <RuntimeIdentifiers>win7-x86;win7-x64;win81-x64;win10;win10-x64;osx.10.10-x64;ubuntu.14.04-x64</RuntimeIdentifiers>
+    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <Version>2.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlackVueDownloader.PCL\BlackVueDownloader.PCL.csproj" />
+  </ItemGroup>
+
+</Project>
