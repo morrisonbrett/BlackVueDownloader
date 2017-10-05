@@ -6,15 +6,13 @@ branches:
   - master
 nuget:  
   disable_publish_on_pr: true
+before_build:
+    - cmd: dotnet --version
 build_script:  
 - ps: .\Build.ps1
 test: off
 after_build:
-    - cd
-    - dir
-    - dir .\BlackVueDownloader /s
     - 7z a -tzip BlackVueDownloader.zip .\BlackVueDownloader\artifacts
-    - dir .\BlackVueDownloader /s
 artifacts:  
 - path: BlackVueDownloader.zip
   name: BlackVueDownloader
