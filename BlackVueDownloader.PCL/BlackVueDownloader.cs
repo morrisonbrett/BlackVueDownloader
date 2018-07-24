@@ -4,18 +4,19 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using ByteSizeLib;
 using Flurl.Http;
 
 namespace BlackVueDownloader.PCL
 {
     public static class BlackVueDownloaderExtensions
     {
-        public const string FILE_SEPARATOR = "\r\n";
+        public const string FileSeparator = "\r\n";
 
         // Extension method to parse file list response into string array
         public static string [] ParseBody(this string s)
         {
-            return s.Replace($"v:1.00{FILE_SEPARATOR}", "").Replace($"v:2.00{FILE_SEPARATOR}", "").Replace(FILE_SEPARATOR, " ").Split(' ');
+            return s.Replace($"v:1.00{FileSeparator}", "").Replace($"v:2.00{FileSeparator}", "").Replace(FileSeparator, " ").Split(' ');
         }
     }
 
@@ -68,8 +69,7 @@ namespace BlackVueDownloader.PCL
 
         public static bool IsValidIp(string ip)
         {
-            IPAddress address;
-            return IPAddress.TryParse(ip, out address);
+	        return IPAddress.TryParse(ip, out _);
         }
 
         /// <summary>
@@ -83,16 +83,18 @@ namespace BlackVueDownloader.PCL
             return body.ParseBody().Select(e => e.Replace("n:/Record/", "").Replace(",s:1000000", "")).ToList();
         }
 
-        /// <summary>
-        /// For given camera ip, filename, and filetype, download the file and return a status
-        /// </summary>
-        /// <param name="ip"></param>
-        /// <param name="filename"></param>
-        /// <param name="filetype"></param>
-        public void DownloadFile(string ip, string filename, string filetype, string tempdir, string targetdir)
+	    /// <summary>
+	    /// For given camera ip, filename, and filetype, download the file and return a status
+	    /// </summary>
+	    /// <param name="ip"></param>
+	    /// <param name="filename"></param>
+	    /// <param name="filetype"></param>
+	    /// <param name="tempdir"></param>
+	    /// <param name="targetdir"></param>
+	    public void DownloadFile(string ip, string filename, string filetype, string tempdir, string targetdir)
         {
-            string filepath = "";
-            string temp_filepath = "";
+            string filepath;
+            string tempFilepath;
 
             try
             {
@@ -107,7 +109,7 @@ namespace BlackVueDownloader.PCL
 
             try
             {
-                temp_filepath = Path.Combine(tempdir, filename);
+                tempFilepath = Path.Combine(tempdir, filename);
             }
             catch (Exception e)
             {
@@ -131,20 +133,27 @@ namespace BlackVueDownloader.PCL
                     var targetfile = Path.Combine(targetdir, filename);
 
                     // If it already exists in the _tmp directory, delete it.
-                    if (_fileSystemHelper.Exists(temp_filepath))
+                    if (_fileSystemHelper.Exists(tempFilepath))
                     {
-                        Console.WriteLine($"File exists in tmp {temp_filepath}, deleting");
+                        Console.WriteLine($"File exists in tmp {tempFilepath}, deleting");
                         BlackVueDownloaderCopyStats.TmpDeleted++;
-                        _fileSystemHelper.Delete(temp_filepath);
+                        _fileSystemHelper.Delete(tempFilepath);
                     }
 
 					// Download to the temp directory, that way, if the file is partially downloaded,
 					// it won't leave a partial file in the target directory
 					Console.WriteLine($"Downloading {filetype} file: {url}");
+	                Stopwatch st = Stopwatch.StartNew();
 					url.DownloadFileAsync(tempdir).Wait();
+	                st.Stop();
+	                BlackVueDownloaderCopyStats.DownloadingTime = BlackVueDownloaderCopyStats.DownloadingTime.Add(st.Elapsed);
 
-                    // File downloaded. Move from temp to target.
-                    _fileSystemHelper.Move(tempfile, targetfile);
+	                FileInfo fi = new FileInfo(tempfile);
+
+	                BlackVueDownloaderCopyStats.TotalDownloaded += fi.Length;
+					 
+					// File downloaded. Move from temp to target.
+					_fileSystemHelper.Move(tempfile, targetfile);
 
                     Console.WriteLine($"Downloaded {filetype} file: {url}");
                     BlackVueDownloaderCopyStats.Copied++;
@@ -171,12 +180,14 @@ namespace BlackVueDownloader.PCL
             }
         }
 
-        /// <summary>
-        /// For the list, loop through and process it
-        /// </summary>
-        /// <param name="ip"></param>
-        /// <param name="list"></param>
-        public void ProcessList(string ip, IList<string> list, string tempdir, string targetdir)
+	    /// <summary>
+	    /// For the list, loop through and process it
+	    /// </summary>
+	    /// <param name="ip"></param>
+	    /// <param name="list"></param>
+	    /// <param name="tempdir"></param>
+	    /// <param name="targetdir"></param>
+	    public void ProcessList(string ip, IList<string> list, string tempdir, string targetdir)
         {
             var sw = new Stopwatch();
             sw.Start();
@@ -207,6 +218,9 @@ namespace BlackVueDownloader.PCL
 
             Console.WriteLine(
                 $"Copied {BlackVueDownloaderCopyStats.Copied}, Ignored {BlackVueDownloaderCopyStats.Ignored}, Errored {BlackVueDownloaderCopyStats.Errored}, TmpDeleted {BlackVueDownloaderCopyStats.TmpDeleted}, TotalTime {BlackVueDownloaderCopyStats.TotalTime}");
+
+	        Console.WriteLine(
+		        $"Downloaded {ByteSize.FromBytes(BlackVueDownloaderCopyStats.TotalDownloaded).ToString()} in {BlackVueDownloaderCopyStats.DownloadingTime}");
         }
 
         /// <summary>
