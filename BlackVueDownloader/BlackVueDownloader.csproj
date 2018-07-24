@@ -21,6 +21,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NLog" Version="4.5.7" />
+    <PackageReference Include="NLog.Config" Version="4.5.7" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BlackVueDownloader.PCL\BlackVueDownloader.PCL.csproj" />
   </ItemGroup>
 

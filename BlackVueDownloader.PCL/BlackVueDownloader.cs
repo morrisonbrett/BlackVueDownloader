@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using ByteSizeLib;
 using Flurl.Http;
+using NLog;
 
 namespace BlackVueDownloader.PCL
 {
@@ -24,12 +25,13 @@ namespace BlackVueDownloader.PCL
     {
         private readonly IFileSystemHelper _fileSystemHelper;
         public BlackVueDownloaderCopyStats BlackVueDownloaderCopyStats;
+	    Logger logger = LogManager.GetCurrentClassLogger();
 
-        /// <summary>
-        /// Instance Downloader with Moq friendly constructor
-        /// </summary>
-        /// <param name="fileSystemHelper"></param>
-        public BlackVueDownloader(IFileSystemHelper fileSystemHelper)
+		/// <summary>
+		/// Instance Downloader with Moq friendly constructor
+		/// </summary>
+		/// <param name="fileSystemHelper"></param>
+		public BlackVueDownloader(IFileSystemHelper fileSystemHelper)
         {
             _fileSystemHelper = fileSystemHelper;
             BlackVueDownloaderCopyStats = new BlackVueDownloaderCopyStats();
@@ -102,7 +104,7 @@ namespace BlackVueDownloader.PCL
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Path Combine exception for filepath, filename {filename}, Exception Message: {e.Message}");
+                logger.Error($"Path Combine exception for filepath, filename {filename}, Exception Message: {e.Message}");
                 BlackVueDownloaderCopyStats.Errored++;
                 return;
             }
@@ -113,14 +115,14 @@ namespace BlackVueDownloader.PCL
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Path Combine exception for temp_filepath, filename {filename}, Exception Message: {e.Message}");
+                logger.Error($"Path Combine exception for temp_filepath, filename {filename}, Exception Message: {e.Message}");
                 BlackVueDownloaderCopyStats.Errored++;
                 return;
             }
 
             if (_fileSystemHelper.Exists(filepath))
             {
-                Console.WriteLine($"File exists {filepath}, ignoring");
+                logger.Info($"File exists {filepath}, ignoring");
                 BlackVueDownloaderCopyStats.Ignored++;
             }
             else
@@ -135,14 +137,14 @@ namespace BlackVueDownloader.PCL
                     // If it already exists in the _tmp directory, delete it.
                     if (_fileSystemHelper.Exists(tempFilepath))
                     {
-                        Console.WriteLine($"File exists in tmp {tempFilepath}, deleting");
+                        logger.Info($"File exists in tmp {tempFilepath}, deleting");
                         BlackVueDownloaderCopyStats.TmpDeleted++;
                         _fileSystemHelper.Delete(tempFilepath);
                     }
 
 					// Download to the temp directory, that way, if the file is partially downloaded,
 					// it won't leave a partial file in the target directory
-					Console.WriteLine($"Downloading {filetype} file: {url}");
+					logger.Info($"Downloading {filetype} file: {url}");
 	                Stopwatch st = Stopwatch.StartNew();
 					url.DownloadFileAsync(tempdir).Wait();
 	                st.Stop();
@@ -155,26 +157,26 @@ namespace BlackVueDownloader.PCL
 					// File downloaded. Move from temp to target.
 					_fileSystemHelper.Move(tempfile, targetfile);
 
-                    Console.WriteLine($"Downloaded {filetype} file: {url}");
+                    logger.Info($"Downloaded {filetype} file: {url}");
                     BlackVueDownloaderCopyStats.Copied++;
                 }
                 catch (FlurlHttpTimeoutException e)
                 {
-                    Console.WriteLine($"FlurlHttpTimeoutException: {e.Message}");
+                    logger.Error($"FlurlHttpTimeoutException: {e.Message}");
                     BlackVueDownloaderCopyStats.Errored++;
                 }
                 catch (FlurlHttpException e)
                 {
                     if (e.Call.Response != null)
                     {
-                        Console.WriteLine($"Failed with response code: {e.Call.Response.StatusCode}");
+						logger.Error($"Failed with response code: {e.Call.Response.StatusCode}");
                     }
                     Console.Write($"Failed before getting a response: {e.Message}");
                     BlackVueDownloaderCopyStats.Errored++;
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine($"Exception: {e.Message}");
+                    logger.Error($"Exception: {e.Message}");
                     BlackVueDownloaderCopyStats.Errored++;
                 }
             }
@@ -196,7 +198,7 @@ namespace BlackVueDownloader.PCL
             // Loop through and download each, but also try and download .gps and .3gf files
             foreach (var s in list)
             {
-                Console.WriteLine($"Processing File: {s}");
+                logger.Info($"Processing File: {s}");
 
                 DownloadFile(ip, s, "video", tempdir, targetdir);
 
@@ -216,10 +218,10 @@ namespace BlackVueDownloader.PCL
             sw.Stop();
             BlackVueDownloaderCopyStats.TotalTime = sw.Elapsed;
 
-            Console.WriteLine(
+            logger.Info(
                 $"Copied {BlackVueDownloaderCopyStats.Copied}, Ignored {BlackVueDownloaderCopyStats.Ignored}, Errored {BlackVueDownloaderCopyStats.Errored}, TmpDeleted {BlackVueDownloaderCopyStats.TmpDeleted}, TotalTime {BlackVueDownloaderCopyStats.TotalTime}");
 
-	        Console.WriteLine(
+	        logger.Info(
 		        $"Downloaded {ByteSize.FromBytes(BlackVueDownloaderCopyStats.TotalDownloaded).ToString()} in {BlackVueDownloaderCopyStats.DownloadingTime}");
         }
 

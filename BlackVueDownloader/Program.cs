@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using NLog;
 
 namespace BlackVueDownloader
 {
@@ -8,20 +9,22 @@ namespace BlackVueDownloader
     {
         private static void Main(string[] args)
         {
+	        Logger logger = LogManager.GetCurrentClassLogger();
+
             var version = Assembly.GetEntryAssembly().GetName().Version.ToString();
 
-            Console.WriteLine($"BlackVue Downloader Version {version}");
+            logger.Info($"BlackVue Downloader Version {version}");
 
             if (args.Length < 1)
             {
-                Console.WriteLine("Usage: BlackVueDownloader.exe ipaddress [destinationdirectory]");
+                logger.Warn("Usage: BlackVueDownloader.exe ipaddress [destinationdirectory]");
                 return;
             }
 
             var ip = args[0];
             if (!PCL.BlackVueDownloader.IsValidIp(ip)) 
             {
-                Console.WriteLine($"Invalid IP Address: {ip}");
+                logger.Error($"Invalid IP Address: {ip}");
                 return;
             }
 
@@ -38,7 +41,7 @@ namespace BlackVueDownloader
             }
             catch(Exception e)
             {
-                Console.WriteLine($"General exception {e.Message}");
+                logger.Error($"General exception {e.Message}");
             }
         }
     }
