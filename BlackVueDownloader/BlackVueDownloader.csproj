@@ -5,7 +5,7 @@
     <Copyright>Copyright © 2017</Copyright>
     <AssemblyTitle>BlackVueDownloader</AssemblyTitle>
     <Authors>Brett Morrison</Authors>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyName>BlackVueDownloader</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>BlackVueDownloader</PackageId>
@@ -17,8 +17,13 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <Version>2.0.0</Version>
+    <Version>2.1.0</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NLog" Version="4.5.7" />
+    <PackageReference Include="NLog.Config" Version="4.5.7" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BlackVueDownloader.PCL\BlackVueDownloader.PCL.csproj" />
