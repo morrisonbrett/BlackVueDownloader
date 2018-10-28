@@ -47,9 +47,10 @@ namespace BlackVueDownloader.PCL
         /// </summary>
         /// <param name="ip"></param>
         /// <param name="directory"></param>
-        public void Run(string ip, string directory)
+        /// <param name="timeout"></param>
+        public void Run(string ip, string directory, int timeout)
         {
-            var body = QueryCameraForFileList(ip);
+            var body = QueryCameraForFileList(ip, timeout);
             var list = GetListOfFilesFromResponse(body);
 
             var tempdir = Path.Combine(directory, "_tmp");
@@ -57,7 +58,7 @@ namespace BlackVueDownloader.PCL
 
             CreateDirectories(tempdir, targetdir);
 
-            ProcessList(ip, list, tempdir, targetdir);
+            ProcessList(ip, list, tempdir, targetdir, timeout);
         }
 
         public void CreateDirectories(string tempdir, string targetdir)
@@ -85,15 +86,16 @@ namespace BlackVueDownloader.PCL
             return body.ParseBody().Select(e => e.Replace("n:/Record/", "").Replace(",s:1000000", "")).ToList();
         }
 
-	    /// <summary>
-	    /// For given camera ip, filename, and filetype, download the file and return a status
-	    /// </summary>
-	    /// <param name="ip"></param>
-	    /// <param name="filename"></param>
-	    /// <param name="filetype"></param>
-	    /// <param name="tempdir"></param>
-	    /// <param name="targetdir"></param>
-	    public void DownloadFile(string ip, string filename, string filetype, string tempdir, string targetdir)
+        /// <summary>
+        /// For given camera ip, filename, and filetype, download the file and return a status
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <param name="filename"></param>
+        /// <param name="filetype"></param>
+        /// <param name="tempdir"></param>
+        /// <param name="targetdir"></param>
+        /// <param name="timeout"></param>
+        public void DownloadFile(string ip, string filename, string filetype, string tempdir, string targetdir, int timeout)
         {
             string filepath;
             string tempFilepath;
@@ -146,7 +148,10 @@ namespace BlackVueDownloader.PCL
 					// it won't leave a partial file in the target directory
 					logger.Info($"Downloading {filetype} file: {url}");
 	                Stopwatch st = Stopwatch.StartNew();
-					url.DownloadFileAsync(tempdir).Wait();
+                    if (timeout > 0)
+                        url.WithTimeout(timeout).DownloadFileAsync(tempdir).Wait();
+                    else
+                        url.DownloadFileAsync(tempdir).Wait();
 	                st.Stop();
 	                BlackVueDownloaderCopyStats.DownloadingTime = BlackVueDownloaderCopyStats.DownloadingTime.Add(st.Elapsed);
 
@@ -182,14 +187,15 @@ namespace BlackVueDownloader.PCL
             }
         }
 
-	    /// <summary>
-	    /// For the list, loop through and process it
-	    /// </summary>
-	    /// <param name="ip"></param>
-	    /// <param name="list"></param>
-	    /// <param name="tempdir"></param>
-	    /// <param name="targetdir"></param>
-	    public void ProcessList(string ip, IList<string> list, string tempdir, string targetdir)
+        /// <summary>
+        /// For the list, loop through and process it
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <param name="list"></param>
+        /// <param name="tempdir"></param>
+        /// <param name="targetdir"></param>
+        /// <param name="timeout"></param>
+        public void ProcessList(string ip, IList<string> list, string tempdir, string targetdir, int timeout)
         {
             var sw = new Stopwatch();
             sw.Start();
@@ -200,7 +206,7 @@ namespace BlackVueDownloader.PCL
             {
                 logger.Info($"Processing File: {s}");
 
-                DownloadFile(ip, s, "video", tempdir, targetdir);
+                DownloadFile(ip, s, "video", tempdir, targetdir, timeout);
 
                 // Line below because the list may include _NF and _NR named files.  Only continue if it's an NF.
                 // Otherwise it's trying to download files that are probably already downloaded
@@ -208,11 +214,11 @@ namespace BlackVueDownloader.PCL
 
 				// Make filenames for accompanying gps file
                 var gpsfile = s.Replace("_NF.mp4", "_N.gps");
-                DownloadFile(ip, gpsfile, "gps", tempdir, targetdir);
+                DownloadFile(ip, gpsfile, "gps", tempdir, targetdir, timeout);
 
 				// Make filenames for accompanying gff file
 				var gffile = s.Replace("_NF.mp4", "_N.3gf");
-                DownloadFile(ip, gffile, "3gf", tempdir, targetdir);
+                DownloadFile(ip, gffile, "3gf", tempdir, targetdir, timeout);
             }
 
             sw.Stop();
@@ -229,14 +235,19 @@ namespace BlackVueDownloader.PCL
         /// Get a raw string response from the camera
         /// </summary>
         /// <param name="ip"></param>
+        /// <param name="timeout"></param>
         /// <returns>Raw string list of files</returns>
-        public string QueryCameraForFileList(string ip)
+        public string QueryCameraForFileList(string ip, int timeout)
         {
             try
             {
                 var url = $"http://{ip}/blackvue_vod.cgi";
 
-                var fileListBody = url.GetStringAsync();
+                System.Threading.Tasks.Task<string> fileListBody;
+                if (timeout > 0)
+                    fileListBody = url.WithTimeout(timeout).GetStringAsync();
+                else
+                    fileListBody = url.GetStringAsync();
                 fileListBody.Wait();
 
                 var content = fileListBody.Result;

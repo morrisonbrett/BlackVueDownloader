@@ -10,6 +10,7 @@ namespace BlackVueDownloader
         private static void Main(string[] args)
         {
 	        Logger logger = LogManager.GetCurrentClassLogger();
+            var timeout = 0;
 
             var version = Assembly.GetEntryAssembly().GetName().Version.ToString();
 
@@ -17,7 +18,7 @@ namespace BlackVueDownloader
 
             if (args.Length < 1)
             {
-                logger.Warn("Usage: BlackVueDownloader.exe ipaddress [destinationdirectory]");
+                logger.Warn("Usage: BlackVueDownloader.exe ipaddress [destinationdirectory] [timeoutinminutes (default is no timeout)]");
                 return;
             }
 
@@ -34,10 +35,15 @@ namespace BlackVueDownloader
                 directory = args[1];
             }
 
+            if (args.Length == 3)
+            {
+                timeout = int.Parse(args[2]) * 60;
+            }
+
             try
             {
                 var blackVueDownloader = new PCL.BlackVueDownloader();
-                blackVueDownloader.Run(ip, directory);
+                blackVueDownloader.Run(ip, directory, timeout);
             }
             catch(Exception e)
             {

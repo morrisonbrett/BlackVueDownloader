@@ -75,7 +75,7 @@ namespace BlackVueDownloader.Tests
             {
                 httpTest.RespondWith("this is the body");
 
-                var body = blackVueDownloader.QueryCameraForFileList(ip);
+                var body = blackVueDownloader.QueryCameraForFileList(ip, 0);
 
                 httpTest.ShouldHaveCalled($"http://{ip}/blackvue_vod.cgi");
 
@@ -93,7 +93,7 @@ namespace BlackVueDownloader.Tests
             {
                 httpTest.RespondWith("");
 
-                var body = blackVueDownloader.QueryCameraForFileList(ip);
+                var body = blackVueDownloader.QueryCameraForFileList(ip, 0);
 
                 httpTest.ShouldHaveCalled($"http://{ip}/blackvue_vod.cgi");
 
@@ -113,7 +113,7 @@ namespace BlackVueDownloader.Tests
 
                 try
                 {
-                    blackVueDownloader.QueryCameraForFileList(ip);
+                    blackVueDownloader.QueryCameraForFileList(ip, 0);
                 }
                 catch (Exception e)
                 {
@@ -136,7 +136,7 @@ namespace BlackVueDownloader.Tests
 
                 try
                 {
-                    blackVueDownloader.QueryCameraForFileList(ip);
+                    blackVueDownloader.QueryCameraForFileList(ip, 0);
                 }
                 catch (Exception e)
                 {
@@ -157,7 +157,7 @@ namespace BlackVueDownloader.Tests
             {
                 httpTest.RespondWith(GenerateRecords(numRecords));
 
-                var body = blackVueDownloader.QueryCameraForFileList(ip);
+                var body = blackVueDownloader.QueryCameraForFileList(ip, 0);
 
                 httpTest.ShouldHaveCalled($"http://{ip}/blackvue_vod.cgi");
 
@@ -193,7 +193,7 @@ namespace BlackVueDownloader.Tests
                 httpTest.RespondWith("OK");
             }
             blackVueDownloader.BlackVueDownloaderCopyStats.Clear();
-            blackVueDownloader.ProcessList(ip, list, targetdir, targetdir);
+            blackVueDownloader.ProcessList(ip, list, targetdir, targetdir, 0);
             Assert.Equal(numRecords*4, blackVueDownloader.BlackVueDownloaderCopyStats.Copied);
 
             // Ignored from above test
@@ -203,7 +203,7 @@ namespace BlackVueDownloader.Tests
             // And if we loop through again, they should all exist, and therefore be "ignored"
             // We need to do this with an unmocked version of the file system helper
             blackVueDownloaderNoMock.BlackVueDownloaderCopyStats.Clear();
-            blackVueDownloaderNoMock.ProcessList(ip, list, targetdir, targetdir);
+            blackVueDownloaderNoMock.ProcessList(ip, list, targetdir, targetdir, 0);
             Assert.Equal(numRecords*4, blackVueDownloaderNoMock.BlackVueDownloaderCopyStats.Ignored);
 
             // Fail test
@@ -212,7 +212,7 @@ namespace BlackVueDownloader.Tests
                 httpTest.RespondWith("FAILURE", 500);
             }
             blackVueDownloader.BlackVueDownloaderCopyStats.Clear();
-            blackVueDownloader.ProcessList(ip, list, targetdir, targetdir);
+            blackVueDownloader.ProcessList(ip, list, targetdir, targetdir, 0);
             Assert.Equal(numRecords*4, blackVueDownloader.BlackVueDownloaderCopyStats.Errored);
 
             // Timeout Fail test
@@ -221,7 +221,7 @@ namespace BlackVueDownloader.Tests
                 httpTest.SimulateTimeout();
             }
             blackVueDownloader.BlackVueDownloaderCopyStats.Clear();
-            blackVueDownloader.ProcessList(ip, list, targetdir, targetdir);
+            blackVueDownloader.ProcessList(ip, list, targetdir, targetdir, 0);
             Assert.Equal(numRecords*4, blackVueDownloader.BlackVueDownloaderCopyStats.Errored);
         }
 
@@ -239,7 +239,7 @@ namespace BlackVueDownloader.Tests
             blackVueDownloaderNoMock.CreateDirectories(targetdir, targetdir);
 
             filesystem.Setup(x => x.Exists(Path.Combine(targetdir, "ignorefile.mp4"))).Returns(true);
-            blackVueDownloader.DownloadFile(ip, "ignorefile.mp4", "video", targetdir, targetdir);
+            blackVueDownloader.DownloadFile(ip, "ignorefile.mp4", "video", targetdir, targetdir, 0);
 
             Assert.Equal(1, blackVueDownloader.BlackVueDownloaderCopyStats.Ignored);
         }
@@ -259,7 +259,7 @@ namespace BlackVueDownloader.Tests
 
             filesystem.Setup(x => x.Exists(Path.Combine(tempdir, "ignorefile.mp4"))).Returns(true);
             filesystem.Setup(x => x.Delete(Path.Combine(tempdir, "ignorefile.mp4")));
-            blackVueDownloader.DownloadFile(ip, Path.Combine(tempdir, "ignorefile.mp4"), "video", tempdir, tempdir);
+            blackVueDownloader.DownloadFile(ip, Path.Combine(tempdir, "ignorefile.mp4"), "video", tempdir, tempdir, 0);
 
             Assert.Equal(1, blackVueDownloader.BlackVueDownloaderCopyStats.Ignored);
         }
