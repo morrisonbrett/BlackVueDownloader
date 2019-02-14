@@ -15,7 +15,7 @@ namespace BlackVueDownloader.PCL
         public const string FileSeparator = "\r\n";
 
         // Extension method to parse file list response into string array
-        public static string [] ParseBody(this string s)
+        public static string[] ParseBody(this string s)
         {
             return s.Replace($"v:1.00{FileSeparator}", "").Replace($"v:2.00{FileSeparator}", "").Replace(FileSeparator, " ").Split(' ');
         }
@@ -25,13 +25,13 @@ namespace BlackVueDownloader.PCL
     {
         private readonly IFileSystemHelper _fileSystemHelper;
         public BlackVueDownloaderCopyStats BlackVueDownloaderCopyStats;
-	    Logger logger = LogManager.GetCurrentClassLogger();
+        Logger logger = LogManager.GetCurrentClassLogger();
 
-		/// <summary>
-		/// Instance Downloader with Moq friendly constructor
-		/// </summary>
-		/// <param name="fileSystemHelper"></param>
-		public BlackVueDownloader(IFileSystemHelper fileSystemHelper)
+        /// <summary>
+        /// Instance Downloader with Moq friendly constructor
+        /// </summary>
+        /// <param name="fileSystemHelper"></param>
+        public BlackVueDownloader(IFileSystemHelper fileSystemHelper)
         {
             _fileSystemHelper = fileSystemHelper;
             BlackVueDownloaderCopyStats = new BlackVueDownloaderCopyStats();
@@ -40,7 +40,7 @@ namespace BlackVueDownloader.PCL
         /// <summary>
         /// Instance Downloader with base constructor
         /// </summary>
-        public BlackVueDownloader() : this (new FileSystemHelper()) {}
+        public BlackVueDownloader() : this(new FileSystemHelper()) { }
 
         /// <summary>
         /// Main control flow
@@ -72,7 +72,7 @@ namespace BlackVueDownloader.PCL
 
         public static bool IsValidIp(string ip)
         {
-	        return IPAddress.TryParse(ip, out _);
+            return IPAddress.TryParse(ip, out _);
         }
 
         /// <summary>
@@ -144,23 +144,23 @@ namespace BlackVueDownloader.PCL
                         _fileSystemHelper.Delete(tempFilepath);
                     }
 
-					// Download to the temp directory, that way, if the file is partially downloaded,
-					// it won't leave a partial file in the target directory
-					logger.Info($"Downloading {filetype} file: {url}");
-	                Stopwatch st = Stopwatch.StartNew();
+                    // Download to the temp directory, that way, if the file is partially downloaded,
+                    // it won't leave a partial file in the target directory
+                    logger.Info($"Downloading {filetype} file: {url}");
+                    Stopwatch st = Stopwatch.StartNew();
                     if (timeout > 0)
                         url.WithTimeout(timeout).DownloadFileAsync(tempdir).Wait();
                     else
                         url.DownloadFileAsync(tempdir).Wait();
-	                st.Stop();
-	                BlackVueDownloaderCopyStats.DownloadingTime = BlackVueDownloaderCopyStats.DownloadingTime.Add(st.Elapsed);
+                    st.Stop();
+                    BlackVueDownloaderCopyStats.DownloadingTime = BlackVueDownloaderCopyStats.DownloadingTime.Add(st.Elapsed);
 
-	                FileInfo fi = new FileInfo(tempfile);
+                    FileInfo fi = new FileInfo(tempfile);
 
-	                BlackVueDownloaderCopyStats.TotalDownloaded += fi.Length;
-					 
-					// File downloaded. Move from temp to target.
-					_fileSystemHelper.Move(tempfile, targetfile);
+                    BlackVueDownloaderCopyStats.TotalDownloaded += fi.Length;
+
+                    // File downloaded. Move from temp to target.
+                    _fileSystemHelper.Move(tempfile, targetfile);
 
                     logger.Info($"Downloaded {filetype} file: {url}");
                     BlackVueDownloaderCopyStats.Copied++;
@@ -174,7 +174,7 @@ namespace BlackVueDownloader.PCL
                 {
                     if (e.Call.Response != null)
                     {
-						logger.Error($"Failed with response code: {e.Call.Response.StatusCode}");
+                        logger.Error($"Failed with response code: {e.Call.Response.StatusCode}");
                     }
                     Console.Write($"Failed before getting a response: {e.Message}");
                     BlackVueDownloaderCopyStats.Errored++;
@@ -212,12 +212,12 @@ namespace BlackVueDownloader.PCL
                 // Otherwise it's trying to download files that are probably already downloaded
                 if (!s.Contains("_NF.mp4")) continue;
 
-				// Make filenames for accompanying gps file
+                // Make filenames for accompanying gps file
                 var gpsfile = s.Replace("_NF.mp4", "_N.gps");
                 DownloadFile(ip, gpsfile, "gps", tempdir, targetdir, timeout);
 
-				// Make filenames for accompanying gff file
-				var gffile = s.Replace("_NF.mp4", "_N.3gf");
+                // Make filenames for accompanying gff file
+                var gffile = s.Replace("_NF.mp4", "_N.3gf");
                 DownloadFile(ip, gffile, "3gf", tempdir, targetdir, timeout);
             }
 
@@ -227,8 +227,8 @@ namespace BlackVueDownloader.PCL
             logger.Info(
                 $"Copied {BlackVueDownloaderCopyStats.Copied}, Ignored {BlackVueDownloaderCopyStats.Ignored}, Errored {BlackVueDownloaderCopyStats.Errored}, TmpDeleted {BlackVueDownloaderCopyStats.TmpDeleted}, TotalTime {BlackVueDownloaderCopyStats.TotalTime}");
 
-	        logger.Info(
-		        $"Downloaded {ByteSize.FromBytes(BlackVueDownloaderCopyStats.TotalDownloaded).ToString()} in {BlackVueDownloaderCopyStats.DownloadingTime}");
+            logger.Info(
+                $"Downloaded {ByteSize.FromBytes(BlackVueDownloaderCopyStats.TotalDownloaded).ToString()} in {BlackVueDownloaderCopyStats.DownloadingTime}");
         }
 
         /// <summary>

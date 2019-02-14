@@ -9,7 +9,7 @@ namespace BlackVueDownloader
     {
         private static void Main(string[] args)
         {
-	        Logger logger = LogManager.GetCurrentClassLogger();
+            Logger logger = LogManager.GetCurrentClassLogger();
             var timeout = 0;
 
             var version = Assembly.GetEntryAssembly().GetName().Version.ToString();
@@ -23,7 +23,7 @@ namespace BlackVueDownloader
             }
 
             var ip = args[0];
-            if (!PCL.BlackVueDownloader.IsValidIp(ip)) 
+            if (!PCL.BlackVueDownloader.IsValidIp(ip))
             {
                 logger.Error($"Invalid IP Address: {ip}");
                 return;
@@ -45,7 +45,7 @@ namespace BlackVueDownloader
                 var blackVueDownloader = new PCL.BlackVueDownloader();
                 blackVueDownloader.Run(ip, directory, timeout);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 logger.Error($"General exception {e.Message}");
             }
