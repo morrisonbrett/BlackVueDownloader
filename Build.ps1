@@ -62,35 +62,35 @@ $revision = "{0}" -f [convert]::ToInt32($revision, 10)
 
 exec { & dotnet test .\BlackVueDownloader.Tests -c Release }
 
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win10-x64 -f netcoreapp2.1 -r win10-x64 --version-suffix=$revision }
-exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win10-x64 -f netcoreapp2.1 -r win10-x64 --version-suffix=$revision }
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win10-x64 -f netcoreapp2.2 -r win10-x64 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win10-x64 -f netcoreapp2.2 -r win10-x64 --version-suffix=$revision }
 
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win7-x64 -f netcoreapp2.1 -r win7-x64 --version-suffix=$revision }
-exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win7-x64 -f netcoreapp2.1 -r win7-x64 --version-suffix=$revision }
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win7-x64 -f netcoreapp2.2 -r win7-x64 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win7-x64 -f netcoreapp2.2 -r win7-x64 --version-suffix=$revision }
 
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win7-x86 -f netcoreapp2.1 -r win7-x86 --version-suffix=$revision }
-exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win7-x86 -f netcoreapp2.1 -r win7-x86 --version-suffix=$revision }
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win7-x86 -f netcoreapp2.2 -r win7-x86 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win7-x86 -f netcoreapp2.2 -r win7-x86 --version-suffix=$revision }
 
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win10-arm -f netcoreapp2.1 -r win10-arm --version-suffix=$revision }
-exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win10-arm -f netcoreapp2.1 -r win10-arm --version-suffix=$revision }
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win10-arm -f netcoreapp2.2 -r win10-arm --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win10-arm -f netcoreapp2.2 -r win10-arm --version-suffix=$revision }
 
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win10-arm64 -f netcoreapp2.1 -r win10-arm64 --version-suffix=$revision }
-exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win10-arm64 -f netcoreapp2.1 -r win10-arm64 --version-suffix=$revision }
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\win10-arm64 -f netcoreapp2.2 -r win10-arm64 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\win10-arm64 -f netcoreapp2.2 -r win10-arm64 --version-suffix=$revision }
 
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\osx.10.10-x64 -f netcoreapp2.1 -r osx.10.10-x64 --version-suffix=$revision }
-exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\osx.10.10-x64 -f netcoreapp2.1 -r osx.10.10-x64 --version-suffix=$revision }
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\osx.10.10-x64 -f netcoreapp2.2 -r osx.10.10-x64 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\osx.10.10-x64 -f netcoreapp2.2 -r osx.10.10-x64 --version-suffix=$revision }
 
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\linux-x64 -f netcoreapp2.1 -r linux-x64 --version-suffix=$revision }
-exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\linux-x64 -f netcoreapp2.1 -r linux-x64 --version-suffix=$revision }
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\linux-x64 -f netcoreapp2.2 -r linux-x64 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\linux-x64 -f netcoreapp2.2 -r linux-x64 --version-suffix=$revision }
 
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\linux-arm -f netcoreapp2.1 -r linux-arm --version-suffix=$revision }
-exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\linux-arm -f netcoreapp2.1 -r linux-arm --version-suffix=$revision }
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\linux-arm -f netcoreapp2.2 -r linux-arm --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\linux-arm -f netcoreapp2.2 -r linux-arm --version-suffix=$revision }
 
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.14.04-x64 -f netcoreapp2.1 -r ubuntu.14.04-x64 --version-suffix=$revision }
-exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.14.04-x64 -f netcoreapp2.1 -r ubuntu.14.04-x64 --version-suffix=$revision }
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.14.04-x64 -f netcoreapp2.2 -r ubuntu.14.04-x64 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.14.04-x64 -f netcoreapp2.2 -r ubuntu.14.04-x64 --version-suffix=$revision }
 
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.16.04-x64 -f netcoreapp2.1 -r ubuntu.16.04-x64 --version-suffix=$revision }
-exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.16.04-x64 -f netcoreapp2.1 -r ubuntu.16.04-x64 --version-suffix=$revision }
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.16.04-x64 -f netcoreapp2.2 -r ubuntu.16.04-x64 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.16.04-x64 -f netcoreapp2.2 -r ubuntu.16.04-x64 --version-suffix=$revision }
 
-exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.18.04-x64 -f netcoreapp2.1 -r ubuntu.18.04-x64 --version-suffix=$revision }
-exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.18.04-x64 -f netcoreapp2.1 -r ubuntu.18.04-x64 --version-suffix=$revision }
+exec { & dotnet build .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.18.04-x64 -f netcoreapp2.2 -r ubuntu.18.04-x64 --version-suffix=$revision }
+exec { & dotnet publish .\BlackVueDownloader -c Release -o .\artifacts\ubuntu.18.04-x64 -f netcoreapp2.2 -r ubuntu.18.04-x64 --version-suffix=$revision }
