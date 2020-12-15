@@ -24,7 +24,7 @@
   <ItemGroup>
     <PackageReference Include="ByteSize" Version="2.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="Flurl.Http" Version="2.4.2" />
+    <PackageReference Include="Flurl.Http" Version="3.0.1" />
     <PackageReference Include="NLog" Version="4.6.8" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
