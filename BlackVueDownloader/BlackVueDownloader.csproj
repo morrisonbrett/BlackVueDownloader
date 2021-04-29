@@ -5,7 +5,7 @@
     <Copyright>Copyright © 2017</Copyright>
     <AssemblyTitle>BlackVueDownloader</AssemblyTitle>
     <Authors>Brett Morrison</Authors>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>BlackVueDownloader</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>BlackVueDownloader</PackageId>
