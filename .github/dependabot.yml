@@ -1,0 +1,21 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "13:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: NLog
+    versions:
+    - 4.7.7
+  - dependency-name: NLog.Config
+    versions:
+    - 4.7.7
+  - dependency-name: Moq
+    versions:
+    - 4.16.0
+  - dependency-name: Microsoft.NET.Test.Sdk
+    versions:
+    - 16.8.3
